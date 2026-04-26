@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login – Justice First Law Associates</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm">
+  <div class="text-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Justice First</h1>
+    <p class="text-sm text-gray-500 mt-1">Admin Portal</p>
+  </div>
+  <div id="errorMsg" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-2 mb-4">
+    Invalid credentials. Access denied.
+  </div>
+  <div class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">User ID</label>
+      <input id="userid" type="text" placeholder="Enter user ID"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <input id="password" type="password" placeholder="Enter password"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button onclick="login()"
+      class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg transition text-sm">
+      Login
+    </button>
+  </div>
+</div>
+<script>
+async function hashString(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function login() {
+  const uid = document.getElementById('userid').value.trim();
+  const pwd = document.getElementById('password').value;
+  const uidHash = await hashString(uid);
+  const pwdHash = await hashString(pwd);
+  const validUID = 'f54cc65103e4e1c947e5a4e7faefcb90ae2e18a0e3523dbf4e3ebb79dd3d4e55';
+  const validPWD = 'a5a03295dc71b6e50f08c7de8fd3b03b3e0dd57a0acb1e0d65c14de8b0e85b1e';
+  if (uidHash === validUID && pwdHash === validPWD) {
+    sessionStorage.setItem('jf_admin_auth', 'true');
+    window.location.href = 'admin.html';
+  } else {
+    document.getElementById('errorMsg').classList.remove('hidden');
+  }
+}
+</script>
+</body>
+</html>
