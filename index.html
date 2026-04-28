@@ -544,8 +544,12 @@
             team: []
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
+        document.addEventListener('DOMContentLoaded', async () => {
+            let savedData = {};
+            try {
+                const res = await fetch('https://jfla.com.pk/api/data');
+                savedData = await res.json();
+            } catch (e) { }
             const data = { ...defaultDb, ...savedData };
 
             if (data) {
@@ -687,51 +691,5 @@
         </svg>
     </a>
 </body>
-<script>
-    (async function () {
-        try {
-            const res = await fetch('https://justice-api.justicefirstlawassociates.workers.dev/api/data');
-            const d = await res.json();
-            if (!d || Object.keys(d).length === 0) return;
-
-            // Site name
-            const siteNames = document.querySelectorAll('[data-field="siteNameEn"]');
-            siteNames.forEach(el => el.textContent = d.siteNameEn || el.textContent);
-
-            // Hero section
-            const heroTitle = document.querySelector('[data-field="heroTitleEn"]');
-            if (heroTitle) heroTitle.textContent = d.heroTitleEn || heroTitle.textContent;
-
-            const heroDesc = document.querySelector('[data-field="heroDesc"]');
-            if (heroDesc) heroDesc.textContent = d.heroDesc || heroDesc.textContent;
-
-            const heroBg = document.querySelector('[data-field="heroBg"]');
-            if (heroBg && d.heroBgImage) heroBg.style.backgroundImage = `url('${d.heroBgImage}')`;
-
-            // Stats
-            const statCases = document.querySelector('[data-field="statCases"]');
-            if (statCases) statCases.textContent = d.statCases || statCases.textContent;
-
-            const statYears = document.querySelector('[data-field="statYears"]');
-            if (statYears) statYears.textContent = d.statYears || statYears.textContent;
-
-            const statSuccess = document.querySelector('[data-field="statSuccess"]');
-            if (statSuccess) statSuccess.textContent = d.statSuccess || statSuccess.textContent;
-
-            // Contact
-            const contactEmail = document.querySelector('[data-field="contactEmail"]');
-            if (contactEmail) contactEmail.textContent = d.contactEmail || contactEmail.textContent;
-
-            const contactPhone = document.querySelector('[data-field="contactWhatsApp"]');
-            if (contactPhone) contactPhone.textContent = d.contactWhatsApp || contactPhone.textContent;
-
-            const contactAddress = document.querySelector('[data-field="contactAddress"]');
-            if (contactAddress) contactAddress.textContent = d.contactAddress || contactAddress.textContent;
-
-        } catch (e) {
-            console.log('Using default content');
-        }
-    })();
-</script>
 
 </html>
