@@ -866,12 +866,27 @@
             reader.readAsDataURL(file);
         }
 
-        function saveAllData() {
-            syncFormToDb();
-            localStorage.setItem('justiceFirstDataV2', JSON.stringify(db));
-            const notif = document.getElementById('saveNotification');
-            notif.classList.remove('hidden');
-            setTimeout(() => { notif.classList.add('hidden'); }, 3000);
+        async function saveAllData() {
+          syncFormToDb();
+          try {
+            const res = await fetch(WORKER_URL + '/api/save', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-Key': ADMIN_KEY
+              },
+              body: JSON.stringify(db)
+            });
+            if (res.ok) {
+              const notif = document.getElementById('saveNotification');
+              notif.classList.remove('hidden');
+              setTimeout(() => notif.classList.add('hidden'), 3000);
+            } else {
+              alert('Save failed.');
+            }
+          } catch(e) {
+            alert('Save failed: ' + e.message);
+          }
         }
 
         function clearSession() {
