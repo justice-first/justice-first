@@ -640,7 +640,7 @@
             ctaSubtitle: "Our dedicated team is ready to assist you with your legal matters.",
             aboutImage: "https://images.unsplash.com/photo-1555328462-d27b14c11b15?q=80&w=800&auto=format&fit=crop",
             statCases: "1200+", statYears: "25+", statSuccess: "98%", statSupport: "24/7",
-            contactWhatsApp: "+923200512289", contactEmail: "info@justicefirst.com",
+            contactWhatsApp: "+923200512289", contactEmail: "justicefirstlawassociates@gmail.com",
             contactAddress: "Law Chambers Building, District Courts, Muzaffarabad, Azad Kashmir",
             contactHours: "Monday - Saturday: 9:00 AM - 6:00 PM\nSunday: Closed",
             navCtaText: "Free Consultation",
@@ -870,26 +870,26 @@
         }
 
         async function saveAllData() {
-          syncFormToDb();
-          try {
-            const res = await fetch(WORKER_URL + '/api/save', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-Admin-Key': ADMIN_KEY
-              },
-              body: JSON.stringify(db)
-            });
-            if (res.ok) {
-              const notif = document.getElementById('saveNotification');
-              notif.classList.remove('hidden');
-              setTimeout(() => notif.classList.add('hidden'), 3000);
-            } else {
-              alert('Save failed.');
+            syncFormToDb();
+            try {
+                const res = await fetch(WORKER_URL + '/api/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Key': ADMIN_KEY
+                    },
+                    body: JSON.stringify(db)
+                });
+                if (res.ok) {
+                    const notif = document.getElementById('saveNotification');
+                    notif.classList.remove('hidden');
+                    setTimeout(() => notif.classList.add('hidden'), 3000);
+                } else {
+                    alert('Save failed.');
+                }
+            } catch (e) {
+                alert('Save failed: ' + e.message);
             }
-          } catch(e) {
-            alert('Save failed: ' + e.message);
-          }
         }
 
         function clearSession() {
@@ -903,5 +903,3 @@
 </body>
 
 </html>
-
-
