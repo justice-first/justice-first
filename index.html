@@ -547,7 +547,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             let savedData = {};
             try {
-                const res = await fetch('https://jfla.com.pk/api/data');
+                const res = await fetch('https://justice-first.pages.dev/api/data');
                 savedData = await res.json();
             } catch (e) { }
             const data = { ...defaultDb, ...savedData };
@@ -693,3 +693,5 @@
 </body>
 
 </html>
+
+
