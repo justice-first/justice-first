@@ -545,11 +545,15 @@
         };
 
         document.addEventListener('DOMContentLoaded', async () => {
-            let savedData = {};
+            let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
-                const res = await fetch('https://justice-first.pages.dev/api/data');
-                savedData = await res.json();
-            } catch (e) { }
+                const res = await fetch('/api/data');
+                const fetchedData = await res.json();
+                if (fetchedData && Object.keys(fetchedData).length > 0) {
+                    savedData = fetchedData;
+                    localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
+                }
+            } catch (e) { console.error('Fetch error:', e); }
             const data = { ...defaultDb, ...savedData };
 
             if (data) {

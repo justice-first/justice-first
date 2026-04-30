@@ -156,8 +156,16 @@
     <script>
         const defaultServices = [];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
+        document.addEventListener('DOMContentLoaded', async () => {
+            let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
+            try {
+                const res = await fetch('/api/data');
+                const fetchedData = await res.json();
+                if (fetchedData && Object.keys(fetchedData).length > 0) {
+                    savedData = fetchedData;
+                    localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
+                }
+            } catch (e) { console.error('Fetch error:', e); }
             const data = { 
                 servicesTitleEn: "Our Legal Expertise",
                 servicesTitleUr: "ہماری قانونی مہارت",
