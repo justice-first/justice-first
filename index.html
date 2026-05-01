@@ -70,13 +70,12 @@
         }
 
         .urdu-text {
-            line-height: 2.4;
-            padding-top: 0.2em;
-            display: block;
             font-family: 'Noto Nastaliq Urdu', sans-serif;
             direction: rtl;
-            line-height: 2.4;
-            padding-top: 0.2em;
+            text-align: right;
+            line-height: 2.5;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
             display: block;
         }
 
@@ -139,12 +138,12 @@
                                 d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 10.31L12 17l-6.82-3.69v-3.13L12 13.5l6.82-3.19v3z" />
                         </svg>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col min-w-0">
                         <span id="siteNameEnNav"
-                            class="font-serif text-xl md:text-2xl font-bold text-white tracking-wide uppercase">Justice
+                            class="font-serif text-lg md:text-2xl font-bold text-white tracking-wide uppercase truncate">Justice
                             First</span>
                         <span id="siteNameUrNav"
-                            class="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-bold leading-tight">Law
+                            class="text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-gold-400 font-bold leading-tight truncate">Law
                             Associates</span>
                     </div>
                 </a>
@@ -200,14 +199,14 @@
         <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-navy-500/20 rounded-full blur-[120px] animate-pulse">
         </div>
 
-        <div class="max-w-7xl mx-auto w-full px-4 relative z-10 w-full py-20">
+        <div class="max-w-7xl mx-auto w-full px-4 relative z-10 w-full py-12 md:py-20">
             <div class="max-w-4xl w-full animate-fade-in-up">
 
 
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-serif text-white font-bold leading-tight mb-12 drop-shadow-2xl">
+                <h1 class="text-3xl md:text-5xl lg:text-7xl font-serif text-white font-bold leading-tight mb-8 md:mb-12 drop-shadow-2xl">
                     <span id="heroTitleEn" class="block tracking-tighter">Justice First</span>
                     <span id="heroTitleUr"
-                        class="block urdu-text text-4xl md:text-5xl text-gold-500 mt-4 leading-[1.2] drop-shadow-lg"></span>
+                        class="block urdu-text text-2xl md:text-3xl lg:text-4xl text-gold-500 mt-4 leading-normal drop-shadow-lg"></span>
                 </h1>
 
                 <p id="heroDesc"
@@ -216,12 +215,12 @@
                     integrity.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-6">
+                <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
                     <a href="contact.html" id="heroBtn1El"
-                        class="btn-premium bg-gold-500 text-navy-900 px-10 py-5 rounded-xl font-bold text-lg shadow-[0_20px_50px_-10px_rgba(201,168,76,0.5)] hover:bg-white transition-all text-center">Book
+                        class="btn-premium bg-gold-500 text-navy-900 px-10 py-4 md:py-5 rounded-xl font-bold text-lg shadow-[0_20px_50px_-10px_rgba(201,168,76,0.5)] hover:bg-white transition-all text-center w-full sm:w-auto">Book
                         Consultation</a>
                     <a href="services.html" id="heroBtn2El"
-                        class="bg-transparent border-2 border-white/30 backdrop-blur-md text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-white/10 transition-all text-center">Explore
+                        class="bg-transparent border-2 border-white/30 backdrop-blur-md text-white px-10 py-4 md:py-5 rounded-xl font-bold text-lg hover:bg-white/10 transition-all text-center w-full sm:w-auto">Explore
                         Services</a>
                 </div>
             </div>
@@ -229,9 +228,9 @@
     </header>
 
     <!-- Modern Stats Section -->
-    <section class="relative z-20 -mt-16 px-4">
+    <section class="relative z-20 -mt-20 md:-mt-16 px-4">
         <div
-            class="max-w-7xl mx-auto w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100 flex flex-wrap justify-center md:justify-between items-center gap-12">
+            class="max-w-7xl mx-auto w-full bg-white rounded-3xl shadow-2xl p-6 md:p-12 border border-gray-100 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             <div class="flex flex-col items-center group">
                 <div
                     class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl">
@@ -247,7 +246,7 @@
                     1200+</p>
                 <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] mt-2">Cases Handled</p>
             </div>
-            <div class="w-px h-16 bg-gray-100 hidden lg:block"></div>
+
             <div class="flex flex-col items-center group">
                 <div
                     class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl">
@@ -263,7 +262,7 @@
                 </p>
                 <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] mt-2">Years Experience</p>
             </div>
-            <div class="w-px h-16 bg-gray-100 hidden lg:block"></div>
+
             <div class="flex flex-col items-center group">
                 <div
                     class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl">
@@ -278,7 +277,7 @@
                 </p>
                 <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px] mt-2">Success Rate</p>
             </div>
-            <div class="w-px h-16 bg-gray-100 hidden lg:block"></div>
+
             <div class="flex flex-col items-center group">
                 <div
                     class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-xl">
@@ -300,7 +299,7 @@
 
 
     <!-- Professional Services Preview -->
-    <section class="py-20 px-4 relative overflow-hidden">
+    <section class="py-12 md:py-20 px-4 relative overflow-hidden">
         <div class="max-w-7xl mx-auto w-full">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20">
                 <div class="max-w-2xl">
@@ -309,9 +308,9 @@
                         <span id="servicesTitleEnPreview"
                             class="text-gold-600 font-bold uppercase tracking-[0.3em] text-sm">Our Expertise</span>
                     </div>
-                    <h2 class="text-5xl md:text-6xl font-serif text-navy-900 font-bold mb-6">Distinguished Legal
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-navy-900 font-bold mb-6">Distinguished Legal
                         Services</h2>
-                    <p id="servicesTitleUrPreview" class="urdu-text text-2xl text-gray-500"></p>
+                    <p id="servicesTitleUrPreview" class="urdu-text text-2xl md:text-3xl lg:text-4xl text-gray-500"></p>
                 </div>
                 <a href="services.html"
                     class="mb-2 text-navy-900 font-bold border-b-2 border-gold-500 pb-1 hover:text-gold-500 transition-colors flex items-center uppercase tracking-widest text-xs">
@@ -329,7 +328,7 @@
     </section>
 
     <!-- Eyecatching Partner Section -->
-    <section class="py-20 px-4 bg-navy-900 relative overflow-hidden">
+    <section class="py-12 md:py-20 px-4 bg-navy-900 relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
         </div>
@@ -354,14 +353,14 @@
                 <div class="order-1 lg:order-2">
                     <span class="text-gold-500 font-bold tracking-[0.3em] uppercase text-sm mb-6 block">Visionary
                         Leadership</span>
-                    <h3 id="mpNameEnPreview" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white font-bold mb-4"></h3>
-                    <p id="mpNameUrPreview" class="urdu-text text-4xl text-gold-300 mb-8"></p>
+                    <h3 id="mpNameEnPreview" class="text-3xl md:text-5xl lg:text-7xl font-serif text-white font-bold mb-4"></h3>
+                    <p id="mpNameUrPreview" class="urdu-text text-2xl md:text-3xl lg:text-4xl text-gold-300 mb-8"></p>
                     <div class="w-20 h-1.5 bg-gold-500 mb-8 rounded-full"></div>
                     <p id="mpBioPreview"
                         class="text-gray-300 text-xl leading-relaxed mb-12 font-light italic border-l-4 border-gold-500/30 pl-8">
                     </p>
                     <a href="managing-partner.html"
-                        class="btn-premium inline-flex items-center bg-white text-navy-900 px-10 py-5 rounded-xl font-bold hover:bg-gold-500 transition-all shadow-xl group uppercase tracking-widest text-sm">
+                        class="btn-premium inline-flex items-center bg-white text-navy-900 px-10 py-5 rounded-xl font-bold hover:bg-gold-500 transition-all shadow-xl group uppercase tracking-widest text-sm w-full sm:w-auto justify-center">
                         Executive Biography
                         <svg class="w-5 h-5 ml-4 transform group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -375,20 +374,20 @@
     </section>
 
     <!-- Professional Team Preview -->
-    <section class="py-20 px-4">
+    <section class="py-12 md:py-20 px-4">
         <div class="max-w-7xl mx-auto w-full">
             <div class="text-center mb-24">
                 <div class="inline-block h-1 w-20 bg-gold-500 mb-6 rounded-full"></div>
-                <h2 id="teamTitleEnPreview" class="text-5xl md:text-6xl font-serif text-navy-900 font-bold mb-4">The
+                <h2 id="teamTitleEnPreview" class="text-3xl md:text-5xl lg:text-6xl font-serif text-navy-900 font-bold mb-4">The
                     Legal Minds</h2>
-                <p id="teamTitleUrPreview" class="urdu-text text-3xl text-gold-600 font-bold"></p>
+                <p id="teamTitleUrPreview" class="urdu-text text-2xl md:text-3xl lg:text-4xl text-gold-600 font-bold"></p>
             </div>
             <div id="dynamicTeamPreviewGrid" class="grid md:grid-cols-3 gap-12">
                 <!-- Team preview injected here -->
             </div>
             <div class="text-center mt-20">
                 <a href="team.html"
-                    class="inline-block border-2 border-navy-900 text-navy-900 px-12 py-4 rounded-xl font-bold hover:bg-navy-900 hover:text-white transition-all shadow-lg uppercase tracking-[0.2em] text-xs">
+                    class="inline-block border-2 border-navy-900 text-navy-900 px-12 py-4 rounded-xl font-bold hover:bg-navy-900 hover:text-white transition-all shadow-lg uppercase tracking-[0.2em] text-xs w-full sm:w-auto">
                     View Entire Team
                 </a>
             </div>
@@ -404,7 +403,7 @@
             </div>
             
             <div class="flex-grow relative overflow-hidden h-12">
-                <div id="tickerTrack" class="flex gap-12 transition-transform duration-500 ease-out absolute inset-0 items-center">
+                <div id="tickerTrack" class="flex gap-12 transition-transform duration-500 ease-out absolute inset-0 items-center whitespace-nowrap">
                     <!-- Activities injected here -->
                 </div>
             </div>
@@ -421,29 +420,29 @@
     </section>
 
     <!-- High-Impact CTA -->
-    <section class="py-20 px-4 bg-navy-950 relative overflow-hidden">
+    <section class="py-12 md:py-20 px-4 bg-navy-950 relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2000&auto=format&fit=crop')] opacity-10 bg-fixed">
         </div>
         <div class="max-w-5xl mx-auto text-center relative z-10">
-            <h2 id="ctaTitleEl" class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-serif text-white mb-8 leading-tight">Secure Your Legal
+            <h2 id="ctaTitleEl" class="text-2xl md:text-4xl lg:text-6xl font-serif text-white mb-8 leading-tight">Secure Your Legal
                 Rights Today</h2>
             <p id="ctaSubtitleEl" class="text-gold-400 text-xl md:text-2xl mb-12 font-light tracking-wide">Schedule a
                 confidential consultation with Muzaffarabad's most trusted law associates.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
                 <a href="contact.html"
-                    class="btn-premium bg-gold-500 text-navy-900 px-12 py-5 rounded-xl font-bold text-xl shadow-2xl uppercase tracking-widest">Book
+                    class="btn-premium bg-gold-500 text-navy-900 px-12 py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl shadow-2xl uppercase tracking-widest w-full sm:w-auto">Book
                     Now</a>
                 <a href="tel:+923005551234"
-                    class="bg-transparent border-2 border-white/20 text-white px-12 py-5 rounded-xl font-bold text-xl hover:bg-white/10 transition-all">Emergency
+                    class="bg-transparent border-2 border-white/20 text-white px-12 py-4 md:py-5 rounded-xl font-bold text-lg md:text-xl hover:bg-white/10 transition-all w-full sm:w-auto">Emergency
                     Call</a>
             </div>
         </div>
     </section>
 
     <!-- Premium Footer -->
-    <footer class="bg-navy-950 text-white pt-20 pb-12 px-4 border-t border-white/5">
-        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-4 gap-16 mb-20">
+    <footer class="bg-navy-950 text-white pt-12 md:pt-20 pb-12 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-20">
             <div class="col-span-1">
                 <a href="index.html" class="flex items-center space-x-3 mb-8 group">
                     <div id="siteLogoFooterContainer"
@@ -588,25 +587,47 @@
             const data = { ...defaultDb, ...savedData };
 
             if (data) {
-                const setText = (id, text) => { if (document.getElementById(id)) document.getElementById(id).innerText = text; };
-
-                setText('heroTitleEn', data.heroTitleEn);
-                setText('heroTitleUr', data.heroTitleUr);
-                setText('heroDesc', data.heroDesc);
-                setText('heroBtn1El', data.heroBtn1);
-                setText('heroBtn2El', data.heroBtn2);
-                setText('ctaTitleEl', data.ctaTitle);
-                setText('ctaSubtitleEl', data.ctaSubtitle);
-
-                // Auto-hide Urdu elements if empty
-                const checkUrdu = (id) => {
-                    const el = document.getElementById(id);
-                    if (el && !el.innerText.trim()) el.style.display = 'none';
+                // Helper for Urdu visibility
+                const checkUrdu = (el, text) => {
+                    if (!el) return;
+                    if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                        el.style.display = 'none';
+                        return false;
+                    }
+                    el.style.display = 'block';
+                    return true;
                 };
-                checkUrdu('heroTitleUr');
-                checkUrdu('servicesTitleUrPreview');
-                checkUrdu('teamTitleUrPreview');
-                checkUrdu('mpNameUrPreview');
+
+                setText('heroTitleEn', data.heroTitleEn || 'Justice First');
+                const heroUr = document.getElementById('heroTitleUr');
+                if(heroUr) {
+                    heroUr.innerText = data.heroTitleUr || '';
+                    checkUrdu(heroUr, data.heroTitleUr);
+                }
+
+                setText('heroDesc', data.heroDesc || '');
+                setText('heroBtn1El', data.heroBtn1 || 'Book Consultation');
+                setText('heroBtn2El', data.heroBtn2 || 'Explore Services');
+                setText('ctaTitleEl', data.ctaTitle || 'Secure Your Legal Rights Today');
+                setText('ctaSubtitleEl', data.ctaSubtitle || '');
+
+                const sUrPreview = document.getElementById('servicesTitleUrPreview');
+                if(sUrPreview) {
+                    sUrPreview.innerText = data.servicesTitleUr || '';
+                    checkUrdu(sUrPreview, data.servicesTitleUr);
+                }
+
+                const tUrPreview = document.getElementById('teamTitleUrPreview');
+                if(tUrPreview) {
+                    tUrPreview.innerText = data.teamTitleUr || '';
+                    checkUrdu(tUrPreview, data.teamTitleUr);
+                }
+
+                const mpUrPreview = document.getElementById('mpNameUrPreview');
+                if(mpUrPreview) {
+                    mpUrPreview.innerText = data.mpNameUr || '';
+                    checkUrdu(mpUrPreview, data.mpNameUr);
+                }
 
                 // Stats Sync
                 setText('statCases', data.statCases);
@@ -626,12 +647,8 @@
                 }
                 if (data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
 
-                setText('servicesTitleEnPreview', data.servicesTitleEn);
-                setText('servicesTitleUrPreview', data.servicesTitleUr);
-                setText('teamTitleEnPreview', data.teamTitleEn);
-                setText('teamTitleUrPreview', data.teamTitleUr);
-                checkUrdu('servicesTitleUrPreview');
-                checkUrdu('teamTitleUrPreview');
+                setText('servicesTitleEnPreview', data.servicesTitleEn || 'Distinguished Legal Services');
+                setText('teamTitleEnPreview', data.teamTitleEn || 'The Legal Minds');
 
                 // Dynamic Images
                 if (data.heroBgImage) document.getElementById('heroBgImg').style.backgroundImage = `url('${data.heroBgImage}')`;
