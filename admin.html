@@ -53,8 +53,7 @@
         
         <div class="flex-1 overflow-y-auto py-4 space-y-1">
             <nav>
-                <button onclick="switchTab('system')" class="nav-item active w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="system"><i data-lucide="server" class="w-5 h-5 mr-3"></i> System & API</button>
-                <button onclick="switchTab('general')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="general"><i data-lucide="layout" class="w-5 h-5 mr-3"></i> General & Branding</button>
+                <button onclick="switchTab('general')" class="nav-item active w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="general"><i data-lucide="layout" class="w-5 h-5 mr-3"></i> General & Branding</button>
                 <button onclick="switchTab('home')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="home"><i data-lucide="home" class="w-5 h-5 mr-3"></i> Home & Contact</button>
                 <button onclick="switchTab('about')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="about"><i data-lucide="info" class="w-5 h-5 mr-3"></i> About Us</button>
                 <button onclick="switchTab('services')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="services"><i data-lucide="briefcase" class="w-5 h-5 mr-3"></i> Services Manager</button>
@@ -74,52 +73,28 @@
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0 shadow-sm z-10">
             <div class="flex items-center">
                 <button onclick="toggleSidebar()" class="md:hidden mr-4 text-gray-500 hover:text-gray-700"><i data-lucide="menu" class="w-6 h-6"></i></button>
-                <h1 class="text-xl font-semibold text-gray-800" id="pageTitle">System & API Configuration</h1>
+                <h1 class="text-xl font-semibold text-gray-800" id="pageTitle">General & Branding</h1>
             </div>
             <div class="flex items-center space-x-4">
                 <div id="syncStatus" class="flex items-center text-sm text-gray-500"><div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div> All changes saved</div>
                 <button onclick="publishChanges()" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2 rounded-md font-medium text-sm transition-all shadow-sm flex items-center">
-                    <i data-lucide="upload-cloud" class="w-4 h-4 mr-2"></i> Publish
+                    <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download data.json
                 </button>
             </div>
         </header>
 
         <div class="flex-1 overflow-y-auto p-6 md:p-8">
             <div class="max-w-5xl mx-auto pb-24">
-                
-                <!-- SYSTEM & API -->
-                <div id="tab-system" class="tab-content active space-y-6">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">API Settings</h2></div>
-                        <div class="p-6 space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Backend API URL</label>
-                                <div class="flex space-x-2">
-                                    <select id="apiMode" class="w-1/3 px-3 py-2 border rounded-md" onchange="toggleApiInput()">
-                                        <option value="relative">Relative Path (Same Domain)</option>
-                                        <option value="custom">Custom Remote Domain</option>
-                                    </select>
-                                    <input type="text" id="customApiUrl" class="flex-1 px-3 py-2 border rounded-md hidden" placeholder="https://jfla.com.pk">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Admin API Key</label>
-                                <input type="password" id="adminApiKey" class="w-full px-3 py-2 border rounded-md" placeholder="Enter key">
-                            </div>
-                            <button onclick="testApiConnection()" class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm">Test Connection</button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- GENERAL & BRANDING -->
-                <div id="tab-general" class="tab-content space-y-6">
+                <div id="tab-general" class="tab-content active space-y-6">
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Branding</h2></div>
                         <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div><label class="block text-sm font-medium mb-1">Site Name (Main)</label><input type="text" id="siteNameEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm font-medium mb-1">Site Name (Urdu)</label><input type="text" id="siteNameUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium mb-2">Site Logo (Base64/URL)</label>
+                                <label class="block text-sm font-medium mb-2">Site Logo</label>
                                 <div class="flex items-center gap-4">
                                     <img id="logoPreview" src="" class="w-20 h-20 bg-gray-100 rounded-lg border object-contain">
                                     <input type="file" accept="image/*" onchange="handleImageUpload(event, 'siteLogo', 'logoPreview')" class="text-sm">
@@ -304,7 +279,7 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
             document.querySelector(`.nav-item[data-tab="${tabId}"]`).classList.add('active');
-            const titles = { system: 'System & API', general: 'General & Branding', home: 'Home & Contact', about: 'About Us', services: 'Services Manager', mp: 'Managing Partner', team: 'Legal Team', activities: 'Latest Activities' };
+            const titles = { general: 'General & Branding', home: 'Home & Contact', about: 'About Us', services: 'Services Manager', mp: 'Managing Partner', team: 'Legal Team', activities: 'Latest Activities' };
             document.getElementById('pageTitle').innerText = titles[tabId];
             if(window.innerWidth < 768) toggleSidebar();
         }
@@ -314,15 +289,6 @@
         function markSaved() { hasUnsavedChanges = false; const i = document.getElementById('syncStatus'); i.innerHTML = '<div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div> All changes saved'; i.classList.replace('text-gray-500', 'text-green-500'); }
 
         window.onload = () => {
-            const savedApiMode = localStorage.getItem('jf_api_mode') || 'relative';
-            const savedApiUrl = localStorage.getItem('jf_api_url') || 'https://jfla.com.pk';
-            const savedApiKey = localStorage.getItem('jf_api_key') || 'admin52274';
-            
-            document.getElementById('apiMode').value = savedApiMode;
-            document.getElementById('customApiUrl').value = savedApiUrl;
-            document.getElementById('adminApiKey').value = savedApiKey;
-            toggleApiInput();
-
             const savedData = localStorage.getItem('justiceFirstDataV2');
             db = savedData ? JSON.parse(savedData) : {};
             
@@ -339,23 +305,6 @@
             renderActivities();
             markSaved();
         };
-
-        function toggleApiInput() {
-            const mode = document.getElementById('apiMode').value;
-            document.getElementById('customApiUrl').classList.toggle('hidden', mode !== 'custom');
-            localStorage.setItem('jf_api_mode', mode);
-        }
-
-        function getApiUrl() {
-            const mode = document.getElementById('apiMode').value;
-            if (mode === 'custom') {
-                let url = document.getElementById('customApiUrl').value.trim();
-                if(url.endsWith('/')) url = url.slice(0, -1);
-                localStorage.setItem('jf_api_url', url);
-                return url + '/api/save';
-            }
-            return '/api/save';
-        }
 
         function syncFormToDb() {
             textFields.forEach(id => { if(document.getElementById(id)) db[id] = document.getElementById(id).value; });
@@ -467,20 +416,25 @@
         function updateItem(type, idx, field, value) { db[type][idx][field] = value; markUnsaved(); }
         function removeItem(type, idx) { db[type].splice(idx, 1); if(type === 'services') renderServices(); else if(type === 'team') renderTeam(); else renderActivities(); markUnsaved(); }
 
-        async function testApiConnection() {
-            try { showToast(`Testing connection to ${getApiUrl()}...`, 'success'); } catch (e) { showToast(`Connection failed: ${e.message}`, 'error'); }
-        }
-
-        async function publishChanges() {
+        function publishChanges() {
             syncFormToDb();
-            const apiKey = document.getElementById('adminApiKey').value;
-            localStorage.setItem('jf_api_key', apiKey);
             localStorage.setItem('justiceFirstDataV2', JSON.stringify(db));
             
-            try {
-                const res = await fetch(getApiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Admin-Key': apiKey }, body: JSON.stringify(db) });
-                if (res.ok) { showToast('Successfully published to live website!'); markSaved(); } else { showToast(`Server returned error: ${res.status}`, 'error'); }
-            } catch (e) { showToast(`Network Error: ${e.message}`, 'error'); }
+            // Generate a data.json file and trigger a download for the user automatically
+            const dataStr = JSON.stringify(db, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('data.json downloaded! Please commit this to Github.', 'success');
+            markSaved();
         }
 
         function clearCache() {
