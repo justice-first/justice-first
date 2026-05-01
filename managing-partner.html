@@ -147,7 +147,7 @@
     </nav>
 
     <!-- Profile Hero Section -->
-    <div class="relative bg-navy-950 pt-32 pb-20 px-4 overflow-hidden">
+    <div class="relative bg-navy-950 pt-24 pb-16 px-4 overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute -right-20 -top-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
             <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
@@ -181,7 +181,7 @@
     </div>
 
     <!-- Main Content -->
-    <section class="py-12 md:py-20 px-4 max-w-7xl mx-auto w-full">
+    <section class="py-10 md:py-16 px-4 max-w-7xl mx-auto w-full">
         <div class="grid lg:grid-cols-3 gap-16">
             <div class="lg:col-span-2 space-y-12">
                 <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
@@ -226,7 +226,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-800 text-white py-12 md:py-16 px-4 border-t border-navy-700">
+    <footer class="bg-navy-950 text-white py-10 md:py-16 px-4 border-t border-white/5">
         <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center md:text-left">
             <div>
                 <h3 class="font-serif text-3xl text-gold-500 mb-8 tracking-wide flex items-center space-x-3 justify-center md:justify-start">
@@ -266,7 +266,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
-                const res = await fetch('data.json');
+                const res = await fetch('data.json?v=' + new Date().getTime());
                 const fetchedData = await res.json();
                 if (fetchedData && Object.keys(fetchedData).length > 0) {
                     savedData = fetchedData;
@@ -276,7 +276,18 @@
             const data = { ...defaultMp, ...savedData };
             
             if(data) {
-                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
+                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || ''; };
+
+                const checkUrdu = (el) => {
+                    if (!el) return;
+                    const text = el.innerText || el.textContent;
+                    if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                        el.style.display = 'none';
+                        return false;
+                    }
+                    el.style.display = 'block';
+                    return true;
+                };
 
                 if(data.siteLogo) {
                     const navLogo = document.getElementById('siteLogoNav');
@@ -297,8 +308,9 @@
                     setText('siteNameUrFooter', data.siteNameUr);
                 }
 
-                document.getElementById('mpNameEn').innerText = data.mpNameEn;
-                document.getElementById('mpNameUr').innerText = data.mpNameUr;
+                document.getElementById('mpNameEn').innerText = data.mpNameEn || '';
+                const mpUr = document.getElementById('mpNameUr');
+                if(mpUr) { mpUr.innerText = data.mpNameUr || ''; checkUrdu(mpUr); }
                 document.getElementById('mpTitleEn').innerText = data.mpTitleEn;
                 document.getElementById('mpBio').innerText = data.mpBio;
                 document.getElementById('mpImgPreview').src = data.mpImage;

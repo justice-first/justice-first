@@ -110,7 +110,7 @@
     </nav>
 
     <!-- Profile Hero Section -->
-    <div class="relative bg-navy-950 pt-32 pb-20 px-4 overflow-hidden">
+    <div class="relative bg-navy-950 pt-24 pb-16 px-4 overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute -right-20 -top-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
             <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
@@ -144,7 +144,7 @@
     </div>
 
     <!-- Main Content Grid -->
-    <section class="py-12 md:py-20 px-4 max-w-7xl mx-auto w-full">
+    <section class="py-10 md:py-16 px-4 max-w-7xl mx-auto w-full">
         <div class="grid lg:grid-cols-3 gap-16">
             <!-- Left Column: Biography & Expertise -->
             <div class="lg:col-span-2 space-y-12">
@@ -187,7 +187,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-800 text-white py-12 md:py-16 px-4 border-t border-navy-700">
+    <footer class="bg-navy-950 text-white py-10 md:py-16 px-4 border-t border-white/5">
         <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center md:text-left">
             <div>
                 <h3 class="font-serif text-3xl text-gold-500 mb-8 tracking-wide flex items-center space-x-3 justify-center md:justify-start">
@@ -224,7 +224,7 @@
             
             let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
-                const res = await fetch('data.json');
+                const res = await fetch('data.json?v=' + new Date().getTime());
                 const fetchedData = await res.json();
                 if (fetchedData && Object.keys(fetchedData).length > 0) {
                     savedData = fetchedData;
@@ -253,6 +253,17 @@
             // Global branding
             if (data.siteNameEn) { setText('siteNameEnNav', data.siteNameEn); setText('siteNameEnFooter', data.siteNameEn); }
             if (data.siteNameUr) { setText('siteNameUrNav', data.siteNameUr); setText('siteNameUrFooter', data.siteNameUr); }
+            
+            // Logos
+            if (data.siteLogo) {
+                const navLogo = document.getElementById('siteLogoNav');
+                const footerLogo = document.getElementById('siteLogoFooter');
+                const navDefault = document.getElementById('defaultLogoNav');
+                const footerDefault = document.getElementById('defaultLogoFooter');
+                if (navLogo) { navLogo.src = data.siteLogo; navLogo.classList.remove('hidden'); if(navDefault) navDefault.classList.add('hidden'); }
+                if (footerLogo) { footerLogo.src = data.siteLogo; footerLogo.classList.remove('hidden'); if(footerDefault) footerDefault.classList.add('hidden'); }
+            }
+
             setText('footerAddress', data.footerAddress || data.contactAddress || '');
             setText('footerCopyrightEl', data.footerCopyright || `© ${new Date().getFullYear()} Justice First Law Associates. All Rights Reserved.`);
 
