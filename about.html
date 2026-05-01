@@ -178,19 +178,6 @@
     </a>
 
     <script>
-        const defaultDb = {
-            aboutTitleEn: "About Our Firm",
-            aboutTitleUr: "فرم کے بارے میں",
-            aboutStoryEn: "",
-            aboutStoryUr: "",
-            aboutMission: "",
-            aboutVision: "",
-            aboutImage: "",
-            contactAddress: "",
-            contactWhatsApp: "",
-            footerCopyright: ""
-        };
-
         document.addEventListener('DOMContentLoaded', async () => {
             let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
@@ -201,58 +188,63 @@
                     localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
                 }
             } catch (e) { console.error('Fetch error:', e); }
-            const data = { ...defaultDb, ...savedData };
-            
-            if(data) {
-                const setText = (id, text) => { 
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = text || ''; 
-                };
-                const setHtml = (id, html) => { 
-                    const el = document.getElementById(id);
-                    if (el) el.innerHTML = html || ''; 
-                };
-                const checkUrdu = (id) => {
-                    const el = document.getElementById(id);
-                    if (el && !el.innerText.trim()) el.style.display = 'none';
-                    else if (el) el.style.display = 'block';
-                };
-                
-                setText('aboutTitleEn', data.aboutTitleEn);
-                setHtml('aboutTitleUr', data.aboutTitleUr);
-                setText('aboutStoryEn', data.aboutStoryEn);
-                setHtml('aboutStoryUr', data.aboutStoryUr);
-                checkUrdu('aboutTitleUr');
-                checkUrdu('aboutStoryUr');
-                setText('aboutMission', data.aboutMission);
-                setText('aboutVision', data.aboutVision);
-                if(data.aboutImage) document.getElementById('aboutImgPreview').src = data.aboutImage;
-                
-                if(data.siteLogo) {
-                    const navLogo = document.getElementById('siteLogoNav');
-                    const footerLogo = document.getElementById('siteLogoFooter');
-                    const defNav = document.getElementById('defaultLogoNav');
-                    const defFooter = document.getElementById('defaultLogoFooter');
-                    if(navLogo) { navLogo.src = data.siteLogo; navLogo.classList.remove('hidden'); if(defNav) defNav.classList.add('hidden'); }
-                    if(footerLogo) { footerLogo.src = data.siteLogo; footerLogo.classList.remove('hidden'); if(defFooter) defFooter.classList.add('hidden'); }
-                }
+            const data = { ...savedData };
 
-                // Dynamic Branding
-                if(data.siteNameEn) {
-                    setText('siteNameEnNav', data.siteNameEn);
-                    setText('siteNameEnFooter', data.siteNameEn);
+            // Utility functions
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
+
+            const checkUrdu = (el) => {
+                if (!el) return;
+                const text = el.innerText || el.textContent;
+                if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                    el.style.display = 'none';
+                    return false;
                 }
-                if(data.siteNameUr) {
-                    setText('siteNameUrNav', data.siteNameUr);
-                    setText('siteNameUrFooter', data.siteNameUr);
+                el.style.display = 'block';
+                return true;
+            };
+
+            // Global branding
+            if (data.siteNameEn) { setText('siteNameEnNav', data.siteNameEn); setText('siteNameEnFooter', data.siteNameEn); }
+            if (data.siteNameUr) { setText('siteNameUrNav', data.siteNameUr); setText('siteNameUrFooter', data.siteNameUr); }
+            setText('footerAddress', data.footerAddress || data.contactAddress || '');
+            setText('footerCopyrightEl', data.footerCopyright || `© ${new Date().getFullYear()} Justice First Law Associates. All Rights Reserved.`);
+
+            const phone = data.footerPhone || data.contactPhone || '';
+            const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
+            if (waPhone) {
+                const waUrl = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
+                if (document.getElementById('waLink')) document.getElementById('waLink').href = waUrl;
+                setText('footerPhone', data.contactWhatsApp || phone);
+            }
+
+            // About Content
+            setText('aboutTitleEn', data.aboutTitleEn || 'About Our Firm');
+            const aUr = document.getElementById('aboutTitleUr');
+            if (aUr) { aUr.innerText = data.aboutTitleUr || ''; checkUrdu(aUr); }
+            
+            setText('aboutStoryEn', data.aboutStoryEn);
+            const asUr = document.getElementById('aboutStoryUr');
+            if (asUr) { asUr.innerText = data.aboutStoryUr || ''; checkUrdu(asUr); }
+
+            setText('aboutMission', data.aboutMission);
+            setText('aboutVision', data.aboutVision);
+            if (data.aboutImage) document.getElementById('aboutImgPreview').src = data.aboutImage;
+
+            // SEO
+            if (data.metaTitleAbout) document.title = data.metaTitleAbout;
+            if (data.metaDescriptionAbout) {
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.content = data.metaDescriptionAbout;
+                else {
+                    const newMeta = document.createElement('meta');
+                    newMeta.name = "description";
+                    newMeta.content = data.metaDescriptionAbout;
+                    document.head.appendChild(newMeta);
                 }
-                
-                if(data.contactAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
-                if(data.contactWhatsApp) {
-                    document.getElementById('footerPhone').innerText = data.contactWhatsApp;
-                    document.getElementById('waLink').href = `https://wa.me/${data.contactWhatsApp.replace(/[^0-9]/g, '')}?text=Hello,%20I%20need%20legal%20consultation`;
-                }
-                if(data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
             }
         });
     </script>

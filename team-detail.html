@@ -78,43 +78,6 @@
             border-radius: 1.5rem;
             z-index: -1;
         }
-        /* Freshy Contact Buttons */
-        .contact-btn-group {
-            display: flex;
-            gap: 1px;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        .contact-btn {
-            flex: 1;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem;
-        }
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-        }
-        .btn-whatsapp:hover {
-            background-color: #1eb956;
-            transform: translateY(-2px);
-        }
-        .btn-call {
-            background-color: #3b82f6;
-            color: white;
-        }
-        .btn-call:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 <body>
@@ -215,12 +178,7 @@
                     <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full -mr-16 -mt-16"></div>
                     <h3 class="text-2xl font-serif text-gold-500 mb-4 relative z-10">Direct Contact</h3>
                     <p class="text-gray-400 mb-8 text-sm leading-relaxed relative z-10">Reach out directly to discuss your case or schedule a consultation.</p>
-                    
-
-
                     <a href="contact.html" class="w-full bg-white/10 text-white py-4 rounded-xl font-bold hover:bg-gold-500 hover:text-navy-900 transition-all text-center block uppercase tracking-widest text-xs border border-white/10">Book Appointment</a>
-                </div>
-                
                 </div>
             </div>
         </div>
@@ -258,8 +216,6 @@
     </footer>
 
     <script>
-        const defaultTeam = [];
-
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const memberId = parseInt(urlParams.get('id'));
@@ -273,64 +229,64 @@
                     localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
                 }
             } catch (e) { console.error('Fetch error:', e); }
-            
             const data = { ...savedData };
-            const team = data.team && data.team.length > 0 ? data.team : defaultTeam;
-            
+
+            // Utility functions
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
+
+            const checkUrdu = (el) => {
+                if (!el) return;
+                const text = el.innerText || el.textContent;
+                if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                    el.style.display = 'none';
+                    return false;
+                }
+                el.style.display = 'block';
+                return true;
+            };
+
+            // Global branding
+            if (data.siteNameEn) { setText('siteNameEnNav', data.siteNameEn); setText('siteNameEnFooter', data.siteNameEn); }
+            if (data.siteNameUr) { setText('siteNameUrNav', data.siteNameUr); setText('siteNameUrFooter', data.siteNameUr); }
+            setText('footerAddress', data.footerAddress || data.contactAddress || '');
+            setText('footerCopyrightEl', data.footerCopyright || `© ${new Date().getFullYear()} Justice First Law Associates. All Rights Reserved.`);
+
+            const phone = data.footerPhone || data.contactPhone || '';
+            const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
+            if (waPhone) {
+                const waUrl = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
+                if (document.getElementById('waLink')) document.getElementById('waLink').href = waUrl;
+            }
+
+            const team = data.team || [];
             if(memberId) {
                 const member = team.find(m => m.id === memberId);
                 if(member) {
-                    document.getElementById('pImg').src = member.image;
-                    document.getElementById('pName').innerText = member.name;
-                    document.getElementById('pTitleEn').innerText = member.titleEn;
-                    document.getElementById('pTitleUr').innerText = member.titleUr || '';
-                    document.getElementById('pDesc').innerText = member.desc || '';
-                    document.getElementById('pExpertise').innerText = member.expertise || 'General Practice';
-                    document.getElementById('pExperience').innerText = member.experience || 'Not listed';
+                    setText('pName', member.name);
+                    setText('pTitleEn', member.titleEn);
+                    const tUr = document.getElementById('pTitleUr');
+                    if (tUr) { tUr.innerText = member.titleUr || ''; checkUrdu(tUr); }
+                    setText('pDesc', member.bio || member.desc);
+                    setText('pExpertise', member.expertise || 'General Practice');
+                    setText('pExperience', member.experience || 'Experienced Advocate');
+                    if (member.image) document.getElementById('pImg').src = member.image;
                     
+                    // Socials
                     const socialsContainer = document.getElementById('pSocials');
-                    let socialsHtml = '';
-                    if(member.whatsapp) {
-                        socialsHtml += `<a href="https://wa.me/${member.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="w-10 h-10 bg-[#25D366] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>`;
+                    if (socialsContainer) {
+                        let socialsHtml = '';
+                        if(member.whatsapp) socialsHtml += `<a href="https://wa.me/${member.whatsapp.replace(/[^0-9]/g, '')}" target="_blank" class="w-10 h-10 bg-[#25D366] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>`;
+                        if(member.email) socialsHtml += `<a href="mailto:${member.email}" class="w-10 h-10 bg-[#EA4335] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a>`;
+                        if(member.linkedin) socialsHtml += `<a href="${member.linkedin}" target="_blank" class="w-10 h-10 bg-[#0077B5] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>`;
+                        socialsContainer.innerHTML = socialsHtml;
                     }
-                    if(member.email) {
-                        socialsHtml += `<a href="mailto:${member.email}" class="w-10 h-10 bg-[#EA4335] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a>`;
-                    }
-                    if(member.linkedin) {
-                        socialsHtml += `<a href="${member.linkedin}" target="_blank" class="w-10 h-10 bg-[#0077B5] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>`;
-                    }
-                    socialsContainer.innerHTML = socialsHtml;
 
-
-            }
-
-            if(data.contactWhatsApp) {
-                document.getElementById('footerPhone').innerText = data.contactWhatsApp;
-            }
-            if(data) {
-                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
-
-                if(data.siteLogo) {
-                    const navLogo = document.getElementById('siteLogoNav');
-                    const footerLogo = document.getElementById('siteLogoFooter');
-                    const defNav = document.getElementById('defaultLogoNav');
-                    const defFooter = document.getElementById('defaultLogoFooter');
-                    if(navLogo) { navLogo.src = data.siteLogo; navLogo.classList.remove('hidden'); if(defNav) defNav.classList.add('hidden'); }
-                    if(footerLogo) { footerLogo.src = data.siteLogo; footerLogo.classList.remove('hidden'); if(defFooter) defFooter.classList.add('hidden'); }
+                    // SEO
+                    document.title = data.metaTitleTeam ? data.metaTitleTeam.replace('{name}', member.name) : `${member.name} - Justice First`;
                 }
-            }
-            if(data.contactAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
-            if(data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
-
-            // Dynamic Branding
-            const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
-            if(data.siteNameEn) {
-                setText('siteNameEnNav', data.siteNameEn);
-                setText('siteNameEnFooter', data.siteNameEn);
-            }
-            if(data.siteNameUr) {
-                setText('siteNameUrNav', data.siteNameUr);
-                setText('siteNameUrFooter', data.siteNameUr);
             }
         });
     </script>

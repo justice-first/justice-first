@@ -164,8 +164,6 @@
     </a>
 
     <script>
-        const defaultTeam = [];
-
         document.addEventListener('DOMContentLoaded', async () => {
             let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
@@ -176,84 +174,75 @@
                     localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
                 }
             } catch (e) { console.error('Fetch error:', e); }
-            const data = { 
-                teamTitleEn: "Our Legal Team",
-                teamTitleUr: "ہماری قانونی ٹیم",
-                contactAddress: "", contactWhatsApp: "", footerCopyright: "",
-                ctaTitle: "Need Expert Legal Counsel?",
-                ctaSubtitle: "",
-                ...savedData 
+            const data = { ...savedData };
+
+            // Utility functions
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
             };
-            
-            if(data) {
-                const setText = (id, text) => { 
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = text || ''; 
-                };
-                const setHtml = (id, html) => { 
-                    const el = document.getElementById(id);
-                    if (el) el.innerHTML = html || ''; 
-                };
-                const checkUrdu = (id) => {
-                    const el = document.getElementById(id);
-                    if (el && !el.innerText.trim()) el.style.display = 'none';
-                    else if (el) el.style.display = 'block';
-                };
 
-                if(data.siteLogo) {
-                    const navLogo = document.getElementById('siteLogoNav');
-                    const footerLogo = document.getElementById('siteLogoFooter');
-                    const defNav = document.getElementById('defaultLogoNav');
-                    const defFooter = document.getElementById('defaultLogoFooter');
-                    if(navLogo) { navLogo.src = data.siteLogo; navLogo.classList.remove('hidden'); if(defNav) defNav.classList.add('hidden'); }
-                    if(footerLogo) { footerLogo.src = data.siteLogo; footerLogo.classList.remove('hidden'); if(defFooter) defFooter.classList.add('hidden'); }
+            const checkUrdu = (el) => {
+                if (!el) return;
+                const text = el.innerText || el.textContent;
+                if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                    el.style.display = 'none';
+                    return false;
                 }
+                el.style.display = 'block';
+                return true;
+            };
 
-                // Dynamic Branding
-                if(data.siteNameEn) {
-                    setText('siteNameEnNav', data.siteNameEn);
-                    setText('siteNameEnFooter', data.siteNameEn);
-                }
-                if(data.siteNameUr) {
-                    setText('siteNameUrNav', data.siteNameUr);
-                    setText('siteNameUrFooter', data.siteNameUr);
-                }
+            // Global branding
+            if (data.siteNameEn) { setText('siteNameEnNav', data.siteNameEn); setText('siteNameEnFooter', data.siteNameEn); }
+            if (data.siteNameUr) { setText('siteNameUrNav', data.siteNameUr); setText('siteNameUrFooter', data.siteNameUr); }
+            setText('footerAddress', data.footerAddress || data.contactAddress || '');
+            setText('footerCopyrightEl', data.footerCopyright || `© ${new Date().getFullYear()} Justice First Law Associates. All Rights Reserved.`);
 
-                setText('teamTitleEn', data.teamTitleEn);
-                setHtml('teamTitleUr', data.teamTitleUr);
-                checkUrdu('teamTitleUr');
-                setText('ctaTitleEl', data.ctaTitle);
-                setText('ctaSubtitleEl', data.ctaSubtitle);
-                
-                if(data.contactAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
-                if(data.contactWhatsApp) {
-                    document.getElementById('footerPhone').innerText = data.contactWhatsApp;
-                    document.getElementById('waLink').href = `https://wa.me/${data.contactWhatsApp.replace(/[^0-9]/g, '')}?text=Hello,%20I%20need%20legal%20consultation`;
-                }
-                if(data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
+            const phone = data.footerPhone || data.contactPhone || '';
+            const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
+            if (waPhone) {
+                const waUrl = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
+                if (document.getElementById('waLink')) document.getElementById('waLink').href = waUrl;
+                setText('footerPhone', data.contactWhatsApp || phone);
+            }
 
-                const team = data.team && data.team.length > 0 ? data.team : defaultTeam;
-                const grid = document.getElementById('teamGrid');
-                if(grid) {
-                    grid.innerHTML = '';
-                    team.forEach(member => {
-                        grid.innerHTML += `
-                        <div class="team-card-premium bg-white rounded-[2rem] shadow-xl overflow-hidden group border border-gray-50 flex flex-col h-full">
-                            <div class="relative overflow-hidden aspect-[4/5]">
-                                <img src="${member.image}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity flex items-end p-10">
-                                    <a href="team-detail.html?id=${member.id}" class="w-full bg-gold-500 text-navy-900 py-4 rounded-2xl font-bold text-center shadow-2xl uppercase tracking-widest text-xs transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">View Full Profile</a>
-                                </div>
+            // Team Content
+            setText('teamTitleEn', data.teamTitleEn || 'Our Legal Team');
+            const tUr = document.getElementById('teamTitleUr');
+            if (tUr) { tUr.innerText = data.teamTitleUr || ''; checkUrdu(tUr); }
+
+            setText('ctaTitleEl', data.ctaTitle || 'Need Expert Legal Counsel?');
+            setText('ctaSubtitleEl', data.ctaSubtitle || '');
+
+            const team = data.team || [];
+            const grid = document.getElementById('teamGrid');
+            if(grid) {
+                grid.innerHTML = '';
+                team.forEach(member => {
+                    grid.innerHTML += `
+                    <div class="team-card-premium bg-white rounded-[2rem] shadow-xl overflow-hidden group border border-gray-50 flex flex-col h-full">
+                        <div class="relative overflow-hidden aspect-[4/5]">
+                            <img src="${member.image}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity flex items-end p-10">
+                                <a href="team-detail.html?id=${member.id}" class="w-full bg-gold-500 text-navy-900 py-4 rounded-2xl font-bold text-center shadow-2xl uppercase tracking-widest text-xs transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">View Full Profile</a>
                             </div>
-                            <div class="p-10 text-center bg-white relative flex-grow">
-                                <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-2 bg-gold-500 rounded-full"></div>
-                                <h3 class="text-2xl md:text-3xl font-serif text-navy-900 mb-1 font-bold">${member.name}</h3>
-                                <p class="text-gold-600 font-bold uppercase text-[10px] tracking-[0.3em] mb-4">${member.titleEn}</p>
-                                ${member.titleUr ? `<p class="urdu-text text-xl md:text-2xl text-gray-500 font-bold leading-normal">${member.titleUr}</p>` : ''}
-                            </div>
-                        </div>`;
-                    });
-                }
+                        </div>
+                        <div class="p-10 text-center bg-white relative flex-grow">
+                            <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-2 bg-gold-500 rounded-full"></div>
+                            <h3 class="text-2xl md:text-3xl font-serif text-navy-900 mb-1 font-bold">${member.name}</h3>
+                            <p class="text-gold-600 font-bold uppercase tracking-[0.2em] text-[10px] mb-4">${member.titleEn}</p>
+                            ${member.titleUr ? `<p class="urdu-text text-xl text-gray-700 mb-0 leading-tight">${member.titleUr}</p>` : ''}
+                        </div>
+                    </div>`;
+                });
+            }
+
+            // SEO
+            if (data.metaTitleTeamPage) document.title = data.metaTitleTeamPage;
+            if (data.metaDescriptionTeam) {
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.content = data.metaDescriptionTeam;
             }
         });
     </script>

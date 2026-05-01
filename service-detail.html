@@ -168,8 +168,6 @@
     </a>
 
     <script>
-        const defaultServices = [];
-
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const serviceId = parseInt(urlParams.get('id'));
@@ -184,48 +182,62 @@
                 }
             } catch (e) { console.error('Fetch error:', e); }
             const data = { ...savedData };
-            const services = data.services && data.services.length > 0 ? data.services : defaultServices;
-            
+
+            // Utility functions
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
+
+            const checkUrdu = (el) => {
+                if (!el) return;
+                const text = el.innerText || el.textContent;
+                if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
+                    el.style.display = 'none';
+                    return false;
+                }
+                el.style.display = 'block';
+                return true;
+            };
+
+            // Global branding
+            if (data.siteNameEn) { setText('siteNameEnNav', data.siteNameEn); setText('siteNameEnFooter', data.siteNameEn); }
+            if (data.siteNameUr) { setText('siteNameUrNav', data.siteNameUr); setText('siteNameUrFooter', data.siteNameUr); }
+            setText('footerAddress', data.footerAddress || data.contactAddress || '');
+            setText('footerCopyrightEl', data.footerCopyright || `© ${new Date().getFullYear()} Justice First Law Associates. All Rights Reserved.`);
+
+            const phone = data.footerPhone || data.contactPhone || '';
+            const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
+            if (waPhone) {
+                const waUrl = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
+                if (document.getElementById('waLink')) document.getElementById('waLink').href = waUrl;
+                if (document.getElementById('sideWaLink')) document.getElementById('sideWaLink').href = waUrl;
+                setText('sideWaPhone', data.contactWhatsApp || phone);
+            }
+
+            const services = data.services || [];
             if(serviceId) {
                 const srv = services.find(s => s.id === serviceId);
                 if(srv) {
-                    document.getElementById('sTitleEn').innerText = srv.titleEn;
-                    document.getElementById('sTitleUr').innerText = srv.titleUr;
-                    document.getElementById('sDesc').innerText = srv.desc;
-                    document.getElementById('pageTitle').innerText = `${srv.titleEn} - Justice First`;
+                    setText('sTitleEn', srv.titleEn);
+                    const sUr = document.getElementById('sTitleUr');
+                    if (sUr) { sUr.innerText = srv.titleUr || ''; checkUrdu(sUr); }
+                    setText('sDesc', srv.desc);
                     
+                    // SEO
+                    document.title = data.metaTitleServices ? data.metaTitleServices.replace('{service}', srv.titleEn) : `${srv.titleEn} - Justice First`;
                     if(srv.keywords) {
-                        document.getElementById('metaKeywords').content = srv.keywords;
+                        const kwEl = document.getElementById('metaKeywords');
+                        if (kwEl) kwEl.content = srv.keywords;
                         const kwContainer = document.getElementById('sKeywords');
-                        kwContainer.innerHTML = '';
-                        srv.keywords.split(',').forEach(k => {
-                            if(k.trim()) {
-                                kwContainer.innerHTML += `<span class="bg-gold-500/10 text-gold-900 px-4 py-2 rounded-full text-sm font-bold border border-gold-500/20">#${k.trim()}</span>`;
-                            }
-                        });
+                        if (kwContainer) {
+                            kwContainer.innerHTML = '';
+                            srv.keywords.split(',').forEach(k => {
+                                if(k.trim()) kwContainer.innerHTML += `<span class="bg-gold-500/10 text-gold-900 px-4 py-2 rounded-full text-sm font-bold border border-gold-500/20">#${k.trim()}</span>`;
+                            });
+                        }
                     }
                 }
-            }
-
-            // Sync Footer & Links
-            if(data.contactWhatsApp) {
-                const waLink = `https://wa.me/${data.contactWhatsApp.replace(/[^0-9]/g, '')}?text=Hello,%20I%20need%20legal%20consultation`;
-                document.getElementById('waLink').href = waLink;
-                document.getElementById('sideWaLink').href = waLink;
-                document.getElementById('sideWaPhone').innerText = data.contactWhatsApp;
-            }
-            if(data.contactAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
-            if(data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
-            
-            // Dynamic Branding
-            const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
-            if(data.siteNameEn) {
-                setText('siteNameEnNav', data.siteNameEn);
-                setText('siteNameEnFooter', data.siteNameEn);
-            }
-            if(data.siteNameUr) {
-                setText('siteNameUrNav', data.siteNameUr);
-                setText('siteNameUrFooter', data.siteNameUr);
             }
         });
     </script>

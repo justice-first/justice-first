@@ -55,6 +55,7 @@
             <nav>
                 <button onclick="switchTab('general')" class="nav-item active w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="general"><i data-lucide="layout" class="w-5 h-5 mr-3"></i> General & Branding</button>
                 <button onclick="switchTab('home')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="home"><i data-lucide="home" class="w-5 h-5 mr-3"></i> Home & Contact</button>
+                <button onclick="switchTab('seo')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="seo"><i data-lucide="search" class="w-5 h-5 mr-3"></i> SEO & Social</button>
                 <button onclick="switchTab('about')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="about"><i data-lucide="info" class="w-5 h-5 mr-3"></i> About Us</button>
                 <button onclick="switchTab('services')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="services"><i data-lucide="briefcase" class="w-5 h-5 mr-3"></i> Services Manager</button>
                 <button onclick="switchTab('mp')" class="nav-item w-full flex items-center px-6 py-3 hover:bg-gray-800 hover:text-white transition-colors" data-tab="mp"><i data-lucide="user-check" class="w-5 h-5 mr-3"></i> Managing Partner</button>
@@ -126,6 +127,7 @@
                             <div><label class="block text-sm mb-1">Footer Copyright Text</label><input type="text" id="footerCopyright" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm mb-1">Footer CTA Banner Title</label><input type="text" id="ctaTitle" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm mb-1">Footer CTA Banner Subtitle</label><input type="text" id="ctaSubtitle" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1 font-medium">Footer Tagline / Bio</label><textarea id="footerTagline" rows="2" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></textarea></div>
                             <div class="col-span-2 border-t pt-4"><label class="block text-sm font-medium mb-2">Footer Contact Override (Optional)</label></div>
                             <div><label class="block text-sm mb-1">Footer Address</label><input type="text" id="footerAddress" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm mb-1">Footer Phone</label><input type="text" id="footerPhone" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
@@ -154,6 +156,21 @@
                     </div>
 
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Section UI Labels</h2></div>
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-sm mb-1">Services Subtitle (En)</label><input type="text" id="servicesSubtitleEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Services Subtitle (Urdu)</label><input type="text" id="servicesSubtitleUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Team Subtitle (En)</label><input type="text" id="teamSubtitleEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Team Subtitle (Urdu)</label><input type="text" id="teamSubtitleUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">MP Subtitle (En)</label><input type="text" id="mpSubtitleEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">MP Subtitle (Urdu)</label><input type="text" id="mpSubtitleUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Partner Bio Button Text</label><input type="text" id="mpBioBtnText" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Activities Ticker Label</label><input type="text" id="tickerLabel" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">CTA Secondary Button Label</label><input type="text" id="ctaSecondaryBtnText" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Global Contact Info & Map</h2></div>
                         <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div><label class="block text-sm mb-1">WhatsApp</label><input type="text" id="contactWhatsApp" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
@@ -171,6 +188,38 @@
                             <div><label class="block text-sm mb-1">Years</label><input type="text" id="statYears" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm mb-1">Success Rate</label><input type="text" id="statSuccess" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                             <div><label class="block text-sm mb-1">Support Info</label><input type="text" id="statSupport" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO & SOCIAL -->
+                <div id="tab-seo" class="tab-content space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Meta Titles & SEO</h2></div>
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-sm mb-1">Home Page Title</label><input type="text" id="metaTitleHome" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">About Page Title</label><input type="text" id="metaTitleAbout" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Services Page Title</label><input type="text" id="metaTitleServices" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Team Page Title</label><input type="text" id="metaTitleTeam" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Contact Page Title</label><input type="text" id="metaTitleContact" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Partner Page Title</label><input type="text" id="metaTitleMP" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Meta Descriptions</h2></div>
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Home Meta Description</label><textarea id="metaDescHome" rows="2" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></textarea></div>
+                            <div class="md:col-span-2"><label class="block text-sm mb-1">Global Meta Description (Fallback)</label><textarea id="metaDescAbout" rows="2" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50"><h2 class="text-lg font-semibold">Social Media Links</h2></div>
+                        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-sm mb-1">Facebook URL</label><input type="url" id="socialFacebook" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Twitter (X) URL</label><input type="url" id="socialTwitter" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">LinkedIn URL</label><input type="url" id="socialLinkedIn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">Instagram URL</label><input type="url" id="socialInstagram" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
+                            <div><label class="block text-sm mb-1">YouTube URL</label><input type="url" id="socialYoutube" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +250,7 @@
                             <div class="flex items-center gap-6"><img id="mpPreviewImg" class="w-32 h-32 object-cover rounded-lg border"><div><label class="block text-sm font-medium mb-2">MP Photo</label><input type="file" accept="image/*" onchange="handleImageUpload(event, 'mpImage', 'mpPreviewImg', 800)" class="text-sm"></div></div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div><label class="block text-sm mb-1">Name (En)</label><input type="text" id="mpNameEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
-                                <div><label class="block text-sm mb-1">Name (Urdu)</label><input type="text" id="mpNameUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
+                                <div><label class="block text-sm font-medium mb-1">Name (Urdu)</label><input type="text" id="mpNameUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
                                 <div><label class="block text-sm mb-1">Title (En)</label><input type="text" id="mpTitleEn" class="w-full px-3 py-2 border rounded-md" onchange="markUnsaved()"></div>
                                 <div><label class="block text-sm mb-1">Title (Urdu)</label><input type="text" id="mpTitleUr" class="w-full px-3 py-2 border rounded-md urdu-input" onchange="markUnsaved()"></div>
                                 <div class="md:col-span-2 border-t pt-4"><label class="block text-sm mb-1 font-semibold">MP Contact Links</label></div>
@@ -260,11 +309,15 @@
 
         const textFields = [
             'siteNameEn', 'siteNameUr', 'navCtaText', 'ctaTitle', 'ctaSubtitle', 
-            'footerCopyright', 'footerAddress', 'footerPhone', 'footerEmail',
+            'footerCopyright', 'footerAddress', 'footerPhone', 'footerEmail', 'footerTagline',
             'aboutTitleEn', 'aboutTitleUr', 'servicesTitleEn', 'servicesTitleUr', 'teamTitleEn', 'teamTitleUr', 'contactTitleEn', 'contactTitleUr', 'activitiesTitleEn', 'activitiesTitleUr',
             'heroTitleEn', 'heroTitleUr', 'heroDesc', 'heroBtn1', 'heroBtn2',
+            'servicesSubtitleEn', 'servicesSubtitleUr', 'teamSubtitleEn', 'teamSubtitleUr', 'mpSubtitleEn', 'mpSubtitleUr', 'mpBioBtnText', 'tickerLabel', 'ctaSecondaryBtnText',
             'statCases', 'statYears', 'statSuccess', 'statSupport',
             'contactWhatsApp', 'contactEmail', 'contactAddress', 'contactHours', 'contactMapLink',
+            'metaTitleHome', 'metaTitleAbout', 'metaTitleServices', 'metaTitleTeam', 'metaTitleContact', 'metaTitleMP',
+            'metaDescHome', 'metaDescAbout', 
+            'socialFacebook', 'socialTwitter', 'socialLinkedIn', 'socialInstagram', 'socialYoutube',
             'aboutStoryEn', 'aboutStoryUr', 'aboutMission', 'aboutVision',
             'mpNameEn', 'mpNameUr', 'mpTitleEn', 'mpTitleUr', 'mpBio', 'mpEdu', 'mpCases', 'mpKeywords', 'mpWhatsApp', 'mpPhone', 'mpEmail', 'mpLinkedIn'
         ];
@@ -284,7 +337,7 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
             document.querySelector(`.nav-item[data-tab="${tabId}"]`).classList.add('active');
-            const titles = { general: 'General & Branding', home: 'Home & Contact', about: 'About Us', services: 'Services Manager', mp: 'Managing Partner', team: 'Legal Team', activities: 'Latest Activities' };
+            const titles = { general: 'General & Branding', home: 'Home & Contact', seo: 'SEO & Social', about: 'About Us', services: 'Services Manager', mp: 'Managing Partner', team: 'Legal Team', activities: 'Latest Activities' };
             document.getElementById('pageTitle').innerText = titles[tabId];
             if(window.innerWidth < 768) toggleSidebar();
         }
