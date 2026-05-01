@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Details - Justice First Law Associates</title>
+    <meta name="keywords" id="metaKeywords" content="legal services, law firm">
+    <title id="pageTitle">Service Details - Justice First Law Associates</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,6 +53,9 @@
         }
         
         .urdu-text {
+            line-height: 2.4;
+            padding-top: 0.2em;
+            display: block;
             font-family: 'Noto Nastaliq Urdu', sans-serif;
             direction: rtl;
             line-height: 2.4;
@@ -106,9 +110,9 @@
                 <div class="bg-white p-12 rounded-3xl shadow-xl border border-gray-100">
                     <h2 class="text-3xl font-serif text-navy-900 mb-8 flex items-center">
                         <svg class="w-8 h-8 mr-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        Landmark Case Histories
+                        Practice Area Keywords
                     </h2>
-                    <ul id="sCases" class="space-y-6"></ul>
+                    <div id="sKeywords" class="flex flex-wrap gap-3"></div>
                 </div>
             </div>
 
@@ -190,17 +194,15 @@
                     document.getElementById('sTitleEn').innerText = srv.titleEn;
                     document.getElementById('sTitleUr').innerText = srv.titleUr;
                     document.getElementById('sDesc').innerText = srv.desc;
+                    document.getElementById('pageTitle').innerText = `${srv.titleEn} - Justice First`;
                     
-                    const casesList = document.getElementById('sCases');
-                    casesList.innerHTML = '';
-                    if(srv.cases) {
-                        srv.cases.split('\n').forEach(c => {
-                            if(c.trim()) {
-                                casesList.innerHTML += `
-                                <li class="flex items-start bg-gray-50 p-6 rounded-2xl border-l-4 border-gold-500 shadow-sm">
-                                    <svg class="w-6 h-6 mr-4 text-gold-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                    <span class="text-gray-800 text-lg">${c}</span>
-                                </li>`;
+                    if(srv.keywords) {
+                        document.getElementById('metaKeywords').content = srv.keywords;
+                        const kwContainer = document.getElementById('sKeywords');
+                        kwContainer.innerHTML = '';
+                        srv.keywords.split(',').forEach(k => {
+                            if(k.trim()) {
+                                kwContainer.innerHTML += `<span class="bg-gold-500/10 text-gold-900 px-4 py-2 rounded-full text-sm font-bold border border-gold-500/20">#${k.trim()}</span>`;
                             }
                         });
                     }
