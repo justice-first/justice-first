@@ -99,12 +99,12 @@
         <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
         <div class="max-w-7xl mx-auto w-full text-center relative z-10">
             <h1 id="aboutTitleEn" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white font-bold mb-6">About Our Firm</h1>
-            <p id="aboutTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-400">ہماری فرم کے بارے میں</p>
+            <p id="aboutTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-400"></p>
         </div>
     </header>
 
     <!-- Professional Story Section -->
-    <section class="py-32 px-4 max-w-7xl mx-auto w-full">
+    <section class="py-20 px-4 max-w-7xl mx-auto w-full">
         <div class="grid lg:grid-cols-2 gap-24 items-start">
             <div class="space-y-12">
                 <div class="relative">
@@ -203,13 +203,26 @@
             const data = { ...defaultDb, ...savedData };
             
             if(data) {
-                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
-                const setHtml = (id, html) => { if(document.getElementById(id)) document.getElementById(id).innerHTML = html; };
+                const setText = (id, text) => { 
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = text || ''; 
+                };
+                const setHtml = (id, html) => { 
+                    const el = document.getElementById(id);
+                    if (el) el.innerHTML = html || ''; 
+                };
+                const checkUrdu = (id) => {
+                    const el = document.getElementById(id);
+                    if (el && !el.innerText.trim()) el.style.display = 'none';
+                    else if (el) el.style.display = 'block';
+                };
                 
                 setText('aboutTitleEn', data.aboutTitleEn);
                 setHtml('aboutTitleUr', data.aboutTitleUr);
                 setText('aboutStoryEn', data.aboutStoryEn);
                 setHtml('aboutStoryUr', data.aboutStoryUr);
+                checkUrdu('aboutTitleUr');
+                checkUrdu('aboutStoryUr');
                 setText('aboutMission', data.aboutMission);
                 setText('aboutVision', data.aboutVision);
                 if(data.aboutImage) document.getElementById('aboutImgPreview').src = data.aboutImage;

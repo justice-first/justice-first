@@ -105,12 +105,12 @@
         <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
         <div class="max-w-7xl mx-auto w-full text-center relative z-10">
             <h1 id="servicesTitleEn" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white font-bold mb-6">Our Legal Expertise</h1>
-            <p id="servicesTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-400">ہماری قانونی مہارت</p>
+            <p id="servicesTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-400"></p>
         </div>
     </header>
 
     <!-- Dynamic Services Grid -->
-    <section class="py-32 px-4 max-w-7xl mx-auto w-full">
+    <section class="py-20 px-4 max-w-7xl mx-auto w-full">
         <div id="servicesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             <!-- Services injected via JS -->
         </div>
@@ -177,8 +177,19 @@
             };
             
             if(data) {
-                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
-                const setHtml = (id, html) => { if(document.getElementById(id)) document.getElementById(id).innerHTML = html; };
+                const setText = (id, text) => { 
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = text || ''; 
+                };
+                const setHtml = (id, html) => { 
+                    const el = document.getElementById(id);
+                    if (el) el.innerHTML = html || ''; 
+                };
+                const checkUrdu = (id) => {
+                    const el = document.getElementById(id);
+                    if (el && !el.innerText.trim()) el.style.display = 'none';
+                    else if (el) el.style.display = 'block';
+                };
 
                 if(data.siteLogo) {
                     const navLogo = document.getElementById('siteLogoNav');
@@ -200,7 +211,8 @@
                 }
 
                 setText('servicesTitleEn', data.servicesTitleEn);
-                if(document.getElementById('servicesTitleUr')) document.getElementById('servicesTitleUr').innerHTML = data.servicesTitleUr;
+                setHtml('servicesTitleUr', data.servicesTitleUr);
+                checkUrdu('servicesTitleUr');
                 
                 if(data.contactAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
                 if(data.contactWhatsApp) {
@@ -220,7 +232,7 @@
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
                             </div>
                             <h3 class="text-3xl font-serif text-navy-900 mb-2">${srv.titleEn}</h3>
-                            <p class="urdu-text text-2xl text-gold-600 mb-6 font-bold">${srv.titleUr}</p>
+                            ${srv.titleUr ? `<p class="urdu-text text-2xl text-gold-600 mb-6 font-bold">${srv.titleUr}</p>` : ''}
                             <p class="text-gray-600 mb-10 flex-grow leading-relaxed">${srv.desc}</p>
                             <a href="service-detail.html?id=${srv.id}" class="inline-flex items-center text-navy-900 font-bold uppercase tracking-widest text-xs border-t border-gray-100 pt-8 hover:text-gold-500 transition-colors">
                                 View Service Details <svg class="w-5 h-5 ml-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>

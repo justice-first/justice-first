@@ -297,29 +297,10 @@
         </div>
     </section>
 
-    <!-- Our Activities Section -->
-    <section class="py-32 px-4 bg-accent relative overflow-hidden">
-        <div class="max-w-7xl mx-auto w-full relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20">
-                <div class="max-w-2xl">
-                    <span class="text-gold-600 font-bold uppercase tracking-[0.4em] text-xs mb-4 block">Chamber Life</span>
-                    <h2 class="text-4xl md:text-6xl font-serif text-navy-950 font-bold mb-6">Our Latest Activities</h2>
-                    <p class="urdu-text text-3xl text-gold-600 font-bold leading-normal">چیمبر کی تازہ ترین سرگرمیاں</p>
-                </div>
-                <div class="hidden md:flex space-x-4">
-                    <button id="prevAct" class="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center hover:bg-navy-900 hover:text-white transition-all"><i data-lucide="chevron-left"></i></button>
-                    <button id="nextAct" class="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center hover:bg-navy-900 hover:text-white transition-all"><i data-lucide="chevron-right"></i></button>
-                </div>
-            </div>
 
-            <div id="activitiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Activities injected via JS -->
-            </div>
-        </div>
-    </section>
 
     <!-- Professional Services Preview -->
-    <section class="py-32 px-4 relative overflow-hidden">
+    <section class="py-20 px-4 relative overflow-hidden">
         <div class="max-w-7xl mx-auto w-full">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20">
                 <div class="max-w-2xl">
@@ -330,8 +311,7 @@
                     </div>
                     <h2 class="text-5xl md:text-6xl font-serif text-navy-900 font-bold mb-6">Distinguished Legal
                         Services</h2>
-                    <p id="servicesTitleUrPreview" class="urdu-text text-3xl text-gray-500">مظفرآباد کی سب سے معتبر
-                        قانونی فرم</p>
+                    <p id="servicesTitleUrPreview" class="urdu-text text-2xl text-gray-500"></p>
                 </div>
                 <a href="services.html"
                     class="mb-2 text-navy-900 font-bold border-b-2 border-gold-500 pb-1 hover:text-gold-500 transition-colors flex items-center uppercase tracking-widest text-xs">
@@ -349,7 +329,7 @@
     </section>
 
     <!-- Eyecatching Partner Section -->
-    <section class="py-32 px-4 bg-navy-900 relative overflow-hidden">
+    <section class="py-20 px-4 bg-navy-900 relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
         </div>
@@ -395,13 +375,13 @@
     </section>
 
     <!-- Professional Team Preview -->
-    <section class="py-32 px-4">
+    <section class="py-20 px-4">
         <div class="max-w-7xl mx-auto w-full">
             <div class="text-center mb-24">
                 <div class="inline-block h-1 w-20 bg-gold-500 mb-6 rounded-full"></div>
                 <h2 id="teamTitleEnPreview" class="text-5xl md:text-6xl font-serif text-navy-900 font-bold mb-4">The
                     Legal Minds</h2>
-                <p id="teamTitleUrPreview" class="urdu-text text-4xl text-gold-600 font-bold">ہماری قانونی ٹیم</p>
+                <p id="teamTitleUrPreview" class="urdu-text text-3xl text-gold-600 font-bold"></p>
             </div>
             <div id="dynamicTeamPreviewGrid" class="grid md:grid-cols-3 gap-12">
                 <!-- Team preview injected here -->
@@ -415,8 +395,33 @@
         </div>
     </section>
 
+    <!-- Activities Ticker Section -->
+    <section id="activitiesTickerSection" class="bg-white border-y border-gray-100 py-8 px-4 overflow-hidden hidden">
+        <div class="max-w-7xl mx-auto w-full flex items-center gap-8">
+            <div class="flex-shrink-0 flex items-center gap-3 border-r border-gray-200 pr-8">
+                <div class="w-2 h-2 bg-gold-500 rounded-full animate-pulse"></div>
+                <span class="text-navy-900 font-bold uppercase tracking-widest text-xs">Firm Activities</span>
+            </div>
+            
+            <div class="flex-grow relative overflow-hidden h-12">
+                <div id="tickerTrack" class="flex gap-12 transition-transform duration-500 ease-out absolute inset-0 items-center">
+                    <!-- Activities injected here -->
+                </div>
+            </div>
+
+            <div class="flex-shrink-0 flex gap-2">
+                <button id="tickerPrev" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-navy-900 hover:text-white transition-all">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button id="tickerNext" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-navy-900 hover:text-white transition-all">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- High-Impact CTA -->
-    <section class="py-24 px-4 bg-navy-950 relative overflow-hidden">
+    <section class="py-20 px-4 bg-navy-950 relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2000&auto=format&fit=crop')] opacity-10 bg-fixed">
         </div>
@@ -437,7 +442,7 @@
     </section>
 
     <!-- Premium Footer -->
-    <footer class="bg-navy-950 text-white pt-24 pb-12 px-4 border-t border-white/5">
+    <footer class="bg-navy-950 text-white pt-20 pb-12 px-4 border-t border-white/5">
         <div class="max-w-7xl mx-auto w-full grid md:grid-cols-4 gap-16 mb-20">
             <div class="col-span-1">
                 <a href="index.html" class="flex items-center space-x-3 mb-8 group">
@@ -593,6 +598,16 @@
                 setText('ctaTitleEl', data.ctaTitle);
                 setText('ctaSubtitleEl', data.ctaSubtitle);
 
+                // Auto-hide Urdu elements if empty
+                const checkUrdu = (id) => {
+                    const el = document.getElementById(id);
+                    if (el && !el.innerText.trim()) el.style.display = 'none';
+                };
+                checkUrdu('heroTitleUr');
+                checkUrdu('servicesTitleUrPreview');
+                checkUrdu('teamTitleUrPreview');
+                checkUrdu('mpNameUrPreview');
+
                 // Stats Sync
                 setText('statCases', data.statCases);
                 setText('statYears', data.statYears);
@@ -615,6 +630,8 @@
                 setText('servicesTitleUrPreview', data.servicesTitleUr);
                 setText('teamTitleEnPreview', data.teamTitleEn);
                 setText('teamTitleUrPreview', data.teamTitleUr);
+                checkUrdu('servicesTitleUrPreview');
+                checkUrdu('teamTitleUrPreview');
 
                 // Dynamic Images
                 if (data.heroBgImage) document.getElementById('heroBgImg').style.backgroundImage = `url('${data.heroBgImage}')`;
@@ -660,7 +677,7 @@
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
                                 </div>
                                 <h3 class="text-2xl font-serif text-navy-900 mb-2">${srv.titleEn}</h3>
-                                <p class="urdu-text text-xl text-gold-600 mb-6 font-bold leading-normal">${srv.titleUr}</p>
+                                ${srv.titleUr ? `<p class="urdu-text text-xl text-gold-600 mb-6 font-bold leading-normal">${srv.titleUr}</p>` : ''}
                                 <p class="text-gray-600 mb-8 flex-grow leading-relaxed line-clamp-3">${srv.desc}</p>
                                 <a href="service-detail.html?id=${srv.id}" class="text-navy-900 font-bold text-xs uppercase tracking-widest flex items-center hover:text-gold-500 transition-colors border-t border-gray-50 pt-6">
                                     Full Details <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -694,52 +711,64 @@
                     }
                 }
 
-                // Render Activities
+                // Render Activities Ticker
                 if (data.activities && data.activities.length > 0) {
-                    const actGrid = document.getElementById('activitiesContainer');
-                    if (actGrid) {
-                        actGrid.innerHTML = '';
+                    const tickerSection = document.getElementById('activitiesTickerSection');
+                    const tickerTrack = document.getElementById('tickerTrack');
+                    
+                    if (tickerTrack) {
+                        tickerSection.classList.remove('hidden');
+                        tickerTrack.innerHTML = '';
+                        
                         data.activities.forEach(act => {
-                            const firstImage = (act.gallery && act.gallery.length > 0) ? act.gallery[0].image : 'https://via.placeholder.com/600x400';
-                            const imageCount = (act.gallery || []).length;
-                            
-                            actGrid.innerHTML += `
-                            <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group hover:shadow-2xl transition-all duration-500 flex flex-col h-full">
-                                <div class="relative aspect-video overflow-hidden">
-                                    <img src="${firstImage}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                    <div class="absolute top-4 right-4 bg-navy-900/90 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full z-10 flex items-center">
-                                        <i data-lucide="image" class="w-3 h-3 mr-1.5 text-gold-400"></i> ${imageCount} PHOTOS
-                                    </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-60"></div>
-                                    <div class="absolute bottom-6 left-6 right-6">
-                                        <span class="text-gold-400 font-bold uppercase text-[10px] tracking-widest mb-2 block">${act.date || 'RECENT'}</span>
-                                        <h3 class="text-white text-xl font-bold leading-tight group-hover:text-gold-400 transition-colors">${act.titleEn}</h3>
-                                    </div>
-                                </div>
-                                <div class="p-8 flex-grow">
-                                    <p class="urdu-text text-xl text-navy-900 font-bold mb-6">${act.titleUr || ''}</p>
-                                    <div class="space-y-4 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                        ${(act.gallery || []).slice(0, 2).map(item => `
-                                            <div class="flex items-center gap-3 border-b border-gray-50 pb-3">
-                                                <div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-gray-100">
-                                                    <img src="${item.image}" class="w-full h-full object-cover">
-                                                </div>
-                                                <div class="min-w-0">
-                                                    <p class="text-xs text-gray-600 truncate">${item.captionEn || ''}</p>
-                                                    <p class="urdu-text text-[10px] text-gold-600 truncate leading-tight mt-0.5">${item.captionUr || ''}</p>
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                                <div class="p-6 pt-0 border-t border-gray-50">
-                                    <button class="w-full bg-gray-50 text-navy-900 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-navy-900 hover:text-white transition-all flex items-center justify-center">
-                                        View Full Event <i data-lucide="external-link" class="w-3 h-3 ml-2"></i>
-                                    </button>
-                                </div>
-                            </div>`;
+                            const tickerItem = document.createElement('div');
+                            tickerItem.className = 'flex-shrink-0 flex flex-col justify-center min-w-[250px] cursor-pointer group';
+                            tickerItem.innerHTML = `
+                                <h4 class="text-navy-900 font-bold text-sm group-hover:text-gold-500 transition-colors truncate">${act.titleEn}</h4>
+                                ${act.titleUr ? `<p class="urdu-text text-[10px] text-gold-600 font-bold truncate leading-tight">${act.titleUr}</p>` : ''}
+                            `;
+                            tickerTrack.appendChild(tickerItem);
                         });
-                        lucide.createIcons();
+
+                        // Ticker Logic
+                        let currentIndex = 0;
+                        
+                        const updateTicker = () => {
+                            const items = tickerTrack.children;
+                            if (items.length === 0) return;
+                            const itemWidth = items[0].offsetWidth + 48; // width + gap (gap-12 is 3rem = 48px)
+                            const offset = currentIndex * -itemWidth;
+                            tickerTrack.style.transform = `translateX(${offset}px)`;
+                        };
+
+                        document.getElementById('tickerNext').onclick = () => {
+                            currentIndex = (currentIndex + 1) % data.activities.length;
+                            updateTicker();
+                        };
+
+                        document.getElementById('tickerPrev').onclick = () => {
+                            currentIndex = (currentIndex - 1 + data.activities.length) % data.activities.length;
+                            updateTicker();
+                        };
+
+                        // Auto-play
+                        let tickerInterval = setInterval(() => {
+                            currentIndex = (currentIndex + 1) % data.activities.length;
+                            updateTicker();
+                        }, 5000);
+
+                        // Pause on hover
+                        tickerSection.addEventListener('mouseenter', () => clearInterval(tickerInterval));
+                        tickerSection.addEventListener('mouseleave', () => {
+                            tickerInterval = setInterval(() => {
+                                currentIndex = (currentIndex + 1) % data.activities.length;
+                                updateTicker();
+                            }, 5000);
+                        });
+
+                        // Initial update
+                        setTimeout(updateTicker, 100);
+                        window.addEventListener('resize', updateTicker);
                     }
                 }
             }
