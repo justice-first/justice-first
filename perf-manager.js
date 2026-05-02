@@ -7,7 +7,7 @@
     // 1. Service Worker Registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW Registration failed', err));
+            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Registration failed', err));
         });
     }
 
@@ -22,6 +22,18 @@
     // 3. Automated Data Loader (Cache-First)
     window.loadJusticeData = async function(callback) {
         const DEFAULT_KEY = 'justiceFirstDataV2';
+        let preloaderHidden = false;
+
+        const safeHide = (delay = 0) => {
+            if (preloaderHidden) return;
+            setTimeout(() => {
+                window.hidePreloader();
+                preloaderHidden = true;
+            }, delay);
+        };
+
+        // Fail-safe: Hide preloader after 3 seconds no matter what
+        setTimeout(() => safeHide(), 3000);
         
         // Try local storage first (instant)
         let cached = localStorage.getItem(DEFAULT_KEY);
@@ -29,8 +41,7 @@
             try {
                 const data = JSON.parse(cached);
                 if (callback) callback(data);
-                // Hide preloader quickly if we have cached data
-                setTimeout(window.hidePreloader, 400);
+                safeHide(400);
             } catch (e) { console.error("Cache Parse Error", e); }
         }
 
@@ -41,18 +52,16 @@
                 const freshData = await res.json();
                 localStorage.setItem(DEFAULT_KEY, JSON.stringify(freshData));
                 
-                // If we didn't have cache, or if data is very important, re-run callback
                 if (!cached || JSON.stringify(freshData) !== cached) {
                     if (callback) callback(freshData);
                 }
-                
-                // Final hidden check
-                setTimeout(window.hidePreloader, 600);
+                safeHide(600);
+            } else {
+                safeHide(1000);
             }
         } catch (e) {
             console.error("Network Fetch Error", e);
-            // Ensure preloader is hidden even on error
-            setTimeout(window.hidePreloader, 1000);
+            safeHide(1000);
         }
     };
 

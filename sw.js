@@ -1,21 +1,21 @@
-const CACHE_NAME = 'justice-first-v3';
+const CACHE_NAME = 'justice-first-v4';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/about.html',
-  '/services.html',
-  '/team.html',
-  '/contact.html',
-  '/managing-partner.html',
-  '/service-detail.html',
-  '/team-detail.html',
-  '/data.json',
-  '/perf-manager.js',
-  '/justice_first_logo_1777690009627.png',
-  '/favicon.jpg'
+  './',
+  'index.html',
+  'about.html',
+  'services.html',
+  'team.html',
+  'contact.html',
+  'managing-partner.html',
+  'service-detail.html',
+  'team-detail.html',
+  'data.json',
+  'perf-manager.js',
+  'justice_first_logo_1777690009627.png',
+  'favicon.jpg'
 ];
 
-// Install Event - Caching static assets
+// Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -25,7 +25,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate Event - Cleaning up old caches
+// Activate Event
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -41,16 +41,27 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch Event - Stale-While-Revalidate Strategy
-// Serves from cache immediately, then updates cache from network
+// Fetch Event
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        // Update cache with the new response
+      if (cachedResponse) {
+        // Return from cache, then update cache in background
+        fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+        }).catch(() => {});
+        return cachedResponse;
+      }
+
+      // Not in cache, fetch from network
+      return fetch(event.request).then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -59,10 +70,9 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       }).catch(() => {
-        // If network fails, we already have the cached version (if it exists)
+        // Fallback for failed fetch and no cache
+        return new Response('Network or Cache Error', { status: 408 });
       });
-
-      return cachedResponse || fetchPromise;
     })
   );
 });
