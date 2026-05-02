@@ -1,268 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Managing Partner - Justice First Law Associates</title>
+    <title id="metaTitle">Managing Partner | JUSTICE FIRST LAW ASSOCIATES</title>
+    <meta name="description" id="metaDesc" content="Professional profile of the Managing Partner at Justice First Law Associates.">
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
 
-    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            950: "#050B16",
-                            900: "#0A1931",
-                            800: "#1A1A2E",
-                            700: "#1B3A6B",
-                        },
+                        midnight: "#0A0F1D",
+                        obsidian: "#05070A",
                         gold: {
-                            600: "#B89640",
-                            500: "#C9A84C",
-                            400: "#D4B96E",
-                            300: "#E2B96F",
-                        }
+                            DEFAULT: "#D4AF37",
+                            light: "#F4CF67",
+                            dark: "#A68926",
+                        },
                     },
                     fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                        urdu: ['"Noto Nastaliq Urdu"', 'sans-serif'],
+                        urdu: ['"Noto Nastaliq Urdu"', 'serif'],
                     }
                 }
             }
         }
     </script>
-    
-    <style>
+
+    <style type="text/css">
         body {
-            background-color: #F8F7F4;
-            color: #1A1A2E;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
+            background-color: #05070A;
+            color: #E2E8F0;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-            color: #0A1931;
+
+        .glass-nav {
+            background: rgba(5, 7, 10, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .urdu-text {
-            font-family: 'Noto Nastaliq Urdu', sans-serif;
             direction: rtl;
-            text-align: right;
-            line-height: 2.5;
-            padding-top: 0.5em;
-            padding-bottom: 0.5em;
-            display: block;
+            line-height: 2.2;
+            font-family: 'Noto Nastaliq Urdu', serif;
         }
-        
-        /* Better framing for profile images */
-        .profile-image-container {
+
+        .profile-frame {
             position: relative;
-            z-index: 20;
         }
-        
-        .profile-image-container::before {
+
+        .profile-frame::after {
             content: '';
             position: absolute;
             top: 20px;
             left: 20px;
             right: -20px;
             bottom: -20px;
-            border: 2px solid #C9A84C;
-            border-radius: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 2.5rem;
             z-index: -1;
         }
-        /* Freshy Contact Buttons */
-        .contact-btn-group {
-            display: flex;
-            gap: 1px;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        .contact-btn {
-            flex: 1;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem;
-        }
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-        }
-        .btn-whatsapp:hover {
-            background-color: #1eb956;
-            transform: translateY(-2px);
-        }
-        .btn-call {
-            background-color: #3b82f6;
-            color: white;
-        }
-        .btn-call:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
+
+        .premium-btn {
+            background: linear-gradient(90deg, #D4AF37, #F4CF67, #D4AF37);
+            background-size: 200% auto;
+            transition: 0.5s;
         }
     </style>
 </head>
-<body>
 
-    <!-- Navbar -->
-    <nav class="bg-navy-950 border-b border-white/10 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <a href="index.html" class="flex items-center space-x-3 group">
-                    <div id="siteLogoNavContainer" class="w-10 h-10 bg-gold-500 rounded flex items-center justify-center overflow-hidden shadow-lg">
-                        <img id="siteLogoNav" src="" alt="Logo" class="max-w-full max-h-full object-contain hidden">
-                        <svg id="defaultLogoNav" class="w-6 h-6 text-navy-900" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 10.31L12 17l-6.82-3.69v-3.13L12 13.5l6.82-3.19v3z"/></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                        <span id="siteNameEnNav" class="font-serif text-lg font-bold text-white tracking-wide uppercase truncate">Justice First</span>
-                        <span id="siteNameUrNav" class="text-[8px] uppercase tracking-[0.2em] text-gold-400 font-bold leading-tight truncate">Law Associates</span>
-                    </div>
-                </a>
-                <div class="hidden lg:flex items-center space-x-10">
-                    <a href="index.html" class="text-gray-300 hover:text-gold-500 font-medium text-sm uppercase tracking-widest transition-colors">Home</a>
-                    <a href="about.html" class="text-gray-300 hover:text-gold-500 font-medium text-sm uppercase tracking-widest transition-colors">About</a>
-                    <a href="services.html" class="text-gray-300 hover:text-gold-500 font-medium text-sm uppercase tracking-widest transition-colors">Services</a>
-                    <a href="team.html" class="text-gold-500 font-bold text-sm uppercase tracking-widest border-b-2 border-gold-500 pb-1">Team</a>
-                    <a href="contact.html" class="bg-gold-500 text-navy-900 px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-lg">Consultation</a>
+<body class="font-sans antialiased">
+
+    <!-- Header / Nav -->
+    <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-4">
+                <img id="siteLogoNav" src="justice_first_logo_1777690009627.png" alt="Logo" class="w-10 h-10 object-contain">
+                <div class="flex flex-col">
+                    <span id="siteNameEnNav" class="text-lg md:text-xl font-serif font-bold text-white tracking-tight uppercase">Justice First</span>
+                    <span id="siteNameUrNav" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span>
                 </div>
+            </a>
+            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                <a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="services.html" class="text-gray-400 hover:text-white transition-colors">Services</a>
+                <a href="team.html" class="text-gray-400 hover:text-white transition-colors">Team</a>
+                <a href="contact.html" class="premium-btn text-obsidian px-7 py-2 rounded-full">Consultation</a>
             </div>
         </div>
     </nav>
 
-    <!-- Profile Hero Section -->
-    <div class="relative bg-navy-950 pt-24 pb-16 px-4 overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute -right-20 -top-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
-            <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-gold-500 rounded-full blur-[120px]"></div>
-        </div>
-        
-        <div class="max-w-7xl mx-auto w-full relative z-10">
-            <div class="flex flex-col md:flex-row gap-12 md:gap-20 items-center md:items-end">
-                <!-- Profile Image -->
-                <div class="w-full md:w-1/3 lg:w-1/4">
-                    <div class="profile-image-container">
-                        <img id="mpImgPreview" src="" alt="Managing Partner" class="w-full aspect-[4/5] object-cover rounded-3xl shadow-2xl border-4 border-white bg-white">
+    <!-- Profile Hero -->
+    <header class="pt-40 pb-24 px-6 bg-midnight relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-obsidian/50 to-obsidian"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="w-full lg:w-1/3">
+                    <div class="profile-frame">
+                        <img id="mpImgPreview" src="" alt="Managing Partner" class="w-full aspect-[4/5] object-cover rounded-[2.5rem] shadow-2xl border border-white/10 relative z-10">
                     </div>
                 </div>
-                
-                <!-- Name and Title -->
-                <div class="w-full md:w-2/3 lg:w-3/4 text-center md:text-left pb-4">
-                    <div class="flex items-center justify-center md:justify-start mb-4">
-                        <div class="h-1 w-12 bg-gold-500 mr-4 hidden md:block"></div>
-                        <span id="mpTitleEn" class="text-gold-500 font-bold tracking-[0.2em] uppercase text-sm md:text-base"></span>
-                    </div>
-                    <h1 id="mpNameEn" class="text-3xl md:text-5xl lg:text-7xl font-serif text-white mb-4"></h1>
-                    <div class="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-8">
-                        <p id="mpNameUr" class="urdu-text text-2xl md:text-3xl lg:text-4xl text-gray-300"></p>
-                        <div id="mpSocials" class="flex space-x-4">
-                            <!-- Branded Socials -->
-                        </div>
+                <div class="w-full lg:w-2/3 text-center lg:text-left">
+                    <span id="mpTitleEn" class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Leadership Spotlight</span>
+                    <h1 id="mpNameEn" class="text-5xl md:text-8xl font-serif font-bold text-white mb-6"></h1>
+                    <p id="mpNameUr" class="urdu-text text-3xl md:text-5xl text-gold-light mb-12 opacity-90"></p>
+                    <div id="mpSocials" class="flex justify-center lg:justify-start space-x-6">
+                        <!-- Injected -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Main Content -->
-    <section class="py-10 md:py-16 px-4 max-w-7xl mx-auto w-full">
-        <div class="grid lg:grid-cols-3 gap-16">
-            <div class="lg:col-span-2 space-y-12">
-                <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
-                    <h2 class="text-2xl font-serif text-navy-900 mb-8 border-b border-gray-100 pb-4 flex items-center">
-                        <svg class="w-8 h-8 mr-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        About the Partner
+    <!-- Biography & Details -->
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-16 items-start">
+            <div class="lg:col-span-2 space-y-16">
+                <div class="bg-white/5 border border-white/10 p-12 rounded-[3rem] shadow-2xl">
+                    <h2 class="text-3xl font-serif text-white font-bold mb-8 flex items-center">
+                        <span class="w-12 h-[1px] bg-gold mr-6"></span> Profile Overview
                     </h2>
-                    <p id="mpBio" class="text-gray-700 text-xl leading-relaxed italic"></p>
+                    <p id="mpBio" class="text-xl text-gray-400 leading-relaxed italic font-light"></p>
                 </div>
-                
-                <div class="space-y-12">
-                    <div class="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-lg">
-                        <h2 class="text-2xl font-serif text-navy-900 mb-6 flex items-center border-b border-gray-100 pb-4">
-                            <svg class="w-6 h-6 mr-3 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
-                            Education & Credentials
-                        </h2>
-                        <ul id="mpEdu" class="grid md:grid-cols-2 gap-6 text-gray-700 text-lg"></ul>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-white/5 to-transparent p-12 rounded-[2.5rem] border border-white/10">
+                        <h3 class="text-xl font-serif text-gold font-bold mb-8">Credentials</h3>
+                        <ul id="mpEdu" class="space-y-6 text-gray-400 text-sm font-medium"></ul>
                     </div>
-                    <div class="bg-white p-8 md:p-10 rounded-2xl border border-gray-100 shadow-lg">
-                        <h2 class="text-2xl font-serif text-navy-900 mb-6 flex items-center border-b border-gray-100 pb-4">
-                            <svg class="w-6 h-6 mr-3 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            Reported Cases
-                        </h2>
-                        <ul id="mpCases" class="grid md:grid-cols-2 gap-6"></ul>
+                    <div class="bg-gradient-to-br from-midnight to-transparent p-12 rounded-[2.5rem] border border-white/10">
+                        <h3 class="text-xl font-serif text-white font-bold mb-8">Notable Cases</h3>
+                        <ul id="mpCases" class="space-y-6 text-gray-400 text-sm font-medium"></ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column -->
-            <div class="space-y-8 sticky top-24">
-                <div class="bg-navy-900 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden border border-white/5">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full -mr-16 -mt-16"></div>
-                    <h3 class="text-2xl font-serif text-gold-500 mb-4 relative z-10">Direct Contact</h3>
-                    <p class="text-gray-400 mb-8 text-sm leading-relaxed relative z-10">Connect directly with our managing partner for professional consultation.</p>
-                    
-
-
-                    <a href="contact.html" class="w-full bg-white/10 text-white py-4 rounded-xl font-bold hover:bg-gold-500 hover:text-navy-900 transition-all text-center block uppercase tracking-widest text-xs border border-white/10">Official Consultation</a>
+            <!-- Contact Box -->
+            <div class="bg-gradient-to-b from-gold/10 to-transparent p-12 rounded-[2.5rem] border border-gold/20 sticky top-32">
+                <h3 class="text-2xl font-serif text-white font-bold mb-6">Direct Access</h3>
+                <p class="text-gray-400 text-sm mb-10 leading-relaxed">Schedule a private session with our managing partner for complex legal strategies.</p>
+                <div class="space-y-6">
+                    <a href="contact.html" class="premium-btn w-full block text-center text-obsidian py-5 rounded-2xl font-black uppercase tracking-widest text-[10px]">Secure Consultation</a>
+                    <a href="index.html" class="w-full block text-center text-white/50 hover:text-white py-4 text-[10px] font-bold uppercase tracking-widest transition-colors">Return Home</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-950 text-white py-10 md:py-16 px-4 border-t border-white/5">
-        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center md:text-left">
+    <footer class="bg-obsidian border-t border-white/5 pt-20 pb-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-10">
             <div>
-                <h3 class="font-serif text-3xl text-gold-500 mb-8 tracking-wide flex items-center space-x-3 justify-center md:justify-start">
-                    <div id="siteLogoFooterContainer" class="w-10 h-10 bg-gold-500 rounded flex items-center justify-center overflow-hidden">
-                        <img id="siteLogoFooter" src="" alt="Logo" class="max-w-full max-h-full object-contain hidden">
-                        <svg id="defaultLogoFooter" class="w-6 h-6 text-navy-900" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 10.31L12 17l-6.82-3.69v-3.13L12 13.5l6.82-3.19v3z"/></svg>
+                <div class="flex items-center space-x-4 mb-6 justify-center md:justify-start">
+                    <img id="siteLogoFooter" src="justice_first_logo_1777690009627.png" class="w-10 h-10" alt="Logo">
+                    <div class="flex flex-col">
+                        <span id="siteNameEnFooter" class="text-xl font-bold text-white uppercase tracking-tight">Justice First</span>
+                        <span id="siteNameUrFooter" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span>
                     </div>
-                    <div class="flex flex-col text-left">
-                        <span id="siteNameEnFooter" class="text-xl font-bold text-white uppercase leading-none">Justice First</span>
-                        <span id="siteNameUrFooter" class="text-[8px] uppercase tracking-[0.2em] text-gold-400 font-bold mt-1">Law Associates</span>
-                    </div>
-                </h3>
-                <p id="footerCopyrightEl" class="text-gray-400 text-sm">© 2024 Justice First Law Associates. All Rights Reserved.</p>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 uppercase tracking-wider text-gold-300">Navigation</h4>
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 text-gray-400">
-                    <a href="index.html" class="hover:text-gold-500 transition-colors">Home</a>
-                    <a href="about.html" class="hover:text-gold-500 transition-colors">About</a>
-                    <a href="services.html" class="hover:text-gold-500 transition-colors">Services</a>
                 </div>
+                <p id="footerCopyrightEl" class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">© 2024 Justice First Law Associates. All Rights Reserved.</p>
             </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 uppercase tracking-wider text-gold-300">Office</h4>
-                <p id="footerAddress" class="text-gray-400">Muzaffarabad, Azad Kashmir</p>
+            <div class="flex flex-col md:items-end text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
+                <p id="footerAddress" class="mb-4 text-center md:text-right max-w-sm"></p>
+                <p id="footerPhone" class="text-gold text-lg"></p>
             </div>
         </div>
     </footer>
 
     <script>
-        const defaultMp = {
-            mpNameEn: "", mpNameUr: "", mpTitleEn: "", mpTitleUr: "",
-            mpBio: "", mpEdu: "", mpCases: "", mpImage: "",
-            mpWhatsApp: "", mpEmail: "", mpLinkedIn: "", contactWhatsApp: ""
-        };
-
         document.addEventListener('DOMContentLoaded', async () => {
             let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
             try {
@@ -273,92 +191,46 @@
                     localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
                 }
             } catch (e) { console.error('Fetch error:', e); }
-            const data = { ...defaultMp, ...savedData };
-            
-            if(data) {
-                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || ''; };
+            const data = savedData;
 
-                const checkUrdu = (el) => {
-                    if (!el) return;
-                    const text = el.innerText || el.textContent;
-                    if (!text || text.trim() === "" || text.includes('urdu text here') || text.includes('اردو')) {
-                        el.style.display = 'none';
-                        return false;
-                    }
-                    el.style.display = 'block';
-                    return true;
-                };
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
 
-                if(data.siteLogo) {
-                    const navLogo = document.getElementById('siteLogoNav');
-                    const footerLogo = document.getElementById('siteLogoFooter');
-                    const defNav = document.getElementById('defaultLogoNav');
-                    const defFooter = document.getElementById('defaultLogoFooter');
-                    if(navLogo) { navLogo.src = data.siteLogo; navLogo.classList.remove('hidden'); if(defNav) defNav.classList.add('hidden'); }
-                    if(footerLogo) { footerLogo.src = data.siteLogo; footerLogo.classList.remove('hidden'); if(defFooter) defFooter.classList.add('hidden'); }
-                }
+            setText('siteNameEnNav', data.siteNameEn);
+            setText('siteNameUrNav', data.siteNameUr);
+            setText('siteNameEnFooter', data.siteNameEn);
+            setText('siteNameUrFooter', data.siteNameUr);
+            setText('footerAddress', data.footerAddress || data.contactAddress);
+            setText('footerPhone', data.footerPhone || data.contactPhone);
+            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
 
-                // Dynamic Branding
-                if(data.siteNameEn) {
-                    setText('siteNameEnNav', data.siteNameEn);
-                    setText('siteNameEnFooter', data.siteNameEn);
-                }
-                if(data.siteNameUr) {
-                    setText('siteNameUrNav', data.siteNameUr);
-                    setText('siteNameUrFooter', data.siteNameUr);
-                }
+            setText('mpNameEn', data.mpNameEn);
+            setText('mpNameUr', data.mpNameUr);
+            setText('mpTitleEn', data.mpTitleEn);
+            setText('mpBio', data.mpBio);
+            if (data.mpImage) document.getElementById('mpImgPreview').src = data.mpImage;
 
-                document.getElementById('mpNameEn').innerText = data.mpNameEn || '';
-                const mpUr = document.getElementById('mpNameUr');
-                if(mpUr) { mpUr.innerText = data.mpNameUr || ''; checkUrdu(mpUr); }
-                document.getElementById('mpTitleEn').innerText = data.mpTitleEn;
-                document.getElementById('mpBio').innerText = data.mpBio;
-                document.getElementById('mpImgPreview').src = data.mpImage;
-                
-
-                
-                // Branded Socials
-                const socialsContainer = document.getElementById('mpSocials');
-                let socialsHtml = '';
-                if(data.mpWhatsApp) {
-                    socialsHtml += `<a href="https://wa.me/${data.mpWhatsApp.replace(/[^0-9]/g, '')}" target="_blank" class="w-10 h-10 bg-[#25D366] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>`;
-                }
-                if(data.mpEmail) {
-                    socialsHtml += `<a href="mailto:${data.mpEmail}" class="w-10 h-10 bg-[#EA4335] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a>`;
-                }
-                if(data.mpLinkedIn) {
-                    socialsHtml += `<a href="${data.mpLinkedIn}" target="_blank" class="w-10 h-10 bg-[#0077B5] text-white rounded-lg flex items-center justify-center hover:-translate-y-1 transition-all shadow-lg"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>`;
-                }
-                socialsContainer.innerHTML = socialsHtml;
-                
-                if(data.mpEdu) {
-                    const eduContainer = document.getElementById('mpEdu');
-                    eduContainer.innerHTML = data.mpEdu.split('\n').map(item => `
-                        <li class="flex items-start bg-gray-50 p-4 rounded-xl border-l-4 border-gold-500 shadow-sm">
-                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-1 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            <span>${item}</span>
-                        </li>`).join('');
-                }
-                if(data.mpCases) {
-                    const casesContainer = document.getElementById('mpCases');
-                    casesContainer.innerHTML = '';
-                    data.mpCases.split('\n').forEach(c => {
-                        if(c.trim()) {
-                            const citation = c.includes(' - ') ? c.split(' - ')[0] : '';
-                            const title = c.includes(' - ') ? c.split(' - ')[1] : c;
-                            casesContainer.innerHTML += `
-                            <li class="bg-white py-4 px-6 rounded-xl border-l-4 border-navy-900 shadow-sm text-gray-800 flex flex-col group hover:border-gold-500 transition-colors">
-                                ${citation ? `<span class="font-bold font-serif text-navy-700 mb-1 group-hover:text-gold-900 transition-colors">${citation}</span>` : ''}
-                                <span class="text-gray-700">${title}</span>
-                            </li>`;
-                        }
-                    });
-                }
-                
-
-                if(data.footerAddress) document.getElementById('footerAddress').innerText = data.contactAddress.split('\n')[0];
-                if(data.footerCopyright) document.getElementById('footerCopyrightEl').innerText = data.footerCopyright;
+            // Credentials
+            if(data.mpEdu) {
+                const edu = document.getElementById('mpEdu');
+                edu.innerHTML = data.mpEdu.split('\n').map(item => `<li class="flex items-center space-x-4"><span class="w-2 h-2 bg-gold rounded-full"></span><span>${item}</span></li>`).join('');
             }
+
+            // Cases
+            if(data.mpCases) {
+                const cases = document.getElementById('mpCases');
+                cases.innerHTML = data.mpCases.split('\n').map(item => `<li class="flex items-start space-x-4"><span class="mt-2 w-1.5 h-1.5 bg-white/20 rounded-full shrink-0"></span><span>${item}</span></li>`).join('');
+            }
+
+            // Socials
+            const sCont = document.getElementById('mpSocials');
+            let sHtml = '';
+            if(data.mpWhatsApp) sHtml += `<a href="https://wa.me/${data.mpWhatsApp.replace(/[^0-9]/g, '')}" class="text-gold hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>`;
+            if(data.mpEmail) sHtml += `<a href="mailto:${data.mpEmail}" class="text-gold hover:text-white transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></a>`;
+            if(data.mpLinkedIn) sHtml += `<a href="${data.mpLinkedIn}" class="text-gold hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>`;
+            sCont.innerHTML = sHtml;
         });
     </script>
 </body>
