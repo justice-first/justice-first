@@ -202,8 +202,22 @@
     <script src="data.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const data = window.justiceData;
+        document.addEventListener('DOMContentLoaded', async () => {
+            let data = window.justiceData;
+
+            // Optional: Fetch fresh data from KV if online
+            try {
+                const response = await fetch('/api/data');
+                if (response.ok) {
+                    const cloudData = await response.json();
+                    if (cloudData && Object.keys(cloudData).length > 0) {
+                        data = cloudData;
+                    }
+                }
+            } catch (err) {
+                console.log("KV Fetch failed, using local data.");
+            }
+
             if (!data) return;
 
             const setText = (id, text) => {

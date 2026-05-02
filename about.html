@@ -136,8 +136,16 @@
     <script src="data.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const data = window.justiceData;
+        document.addEventListener('DOMContentLoaded', async () => {
+            let data = window.justiceData;
+            try {
+                const response = await fetch('/api/data');
+                if (response.ok) {
+                    const cloudData = await response.json();
+                    if (cloudData && Object.keys(cloudData).length > 0) data = cloudData;
+                }
+            } catch (err) {}
+
             if (!data) return;
 
             const setText = (id, text) => {
