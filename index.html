@@ -74,6 +74,43 @@
     </script>
 
     <style type="text/css">
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #05070A;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(212, 175, 55, 0.1);
+            border-top: 2px solid #D4AF37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-logo {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+
+        body.loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         body {
             background-color: #05070A;
             color: #E2E8F0;
@@ -150,6 +187,13 @@
 </head>
 
 <body class="font-sans antialiased">
+
+    <!-- Premium Preloader -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <img src="justice_first_logo_1777690009627.png" class="loader-logo" alt="Loading...">
+        <div class="mt-8 text-[10px] uppercase tracking-[0.5em] text-gold font-bold animate-pulse">Initializing Justice</div>
+    </div>
 
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] transition-all duration-500 py-6">
@@ -271,8 +315,11 @@
                 </a>
             </div>
 
-            <div id="dynamicServicesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Services Cards will be injected -->
+            <div id="dynamicServicesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+                <!-- Skeleton Loading State -->
+                <div class="animate-pulse bg-white/5 rounded-[2.5rem] h-80"></div>
+                <div class="animate-pulse bg-white/5 rounded-[2.5rem] h-80"></div>
+                <div class="animate-pulse bg-white/5 rounded-[2.5rem] h-80"></div>
             </div>
         </div>
     </section>
@@ -419,163 +466,150 @@
         </svg>
     </a>
 
+    <!-- Performance Manager -->
+    <script src="perf-manager.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Default Hardcoded Data (Preserving previous changes)
-            const defaultData = {
-                siteNameEn: "Justice First",
-                siteNameUr: "Law Associates",
-                heroTitleEn: "Justice First Law Associates",
-                heroTitleUr: "حق کی آواز بلند کرنا ہی ہمارا پیشہ ہے — شیر کی طرح، ترازو کے ساتھ",
-                heroDesc: "Your rights deserve courage in court like a lion. Strategic and dedicated legal representation serving Muzaffarabad.",
-                statCases: "1200+",
-                statYears: "25+",
-                statSuccess: "98%",
-                statSupport: "24/7",
-                heroBtn1Text: "Book Consultation",
-                heroBtn2Text: "Our Expertise",
-                footerAddress: "Office No 4: Aiwan Plaza, First Floor, Bank Square, Chattar Domail, Muzaffarabad, Azad Jammu & Kashmir",
-                footerPhone: "+923200512289",
-                footerEmail: "justicefirstlawassociates@gmail.com",
-            };
+        document.addEventListener('DOMContentLoaded', () => {
+            window.loadJusticeData((data) => {
+                if (!data) return;
+                
+                // Mapping Utilities
+                const setText = (id, text) => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = text || '';
+                };
 
-            let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || defaultData;
-            
-            try {
-                const res = await fetch('data.json?v=' + new Date().getTime());
-                const fetchedData = await res.json();
-                if (fetchedData && Object.keys(fetchedData).length > 0) {
-                    savedData = { ...defaultData, ...fetchedData };
-                    localStorage.setItem('justiceFirstDataV2', JSON.stringify(savedData));
+                const checkUrdu = (el) => {
+                    if (!el) return;
+                    const text = el.innerText || el.textContent;
+                    if (!text || text.trim() === "" || text.includes('urdu text here')) {
+                        el.style.display = 'none';
+                        return false;
+                    }
+                    el.style.display = 'block';
+                    return true;
+                };
+
+                // Apply Branding
+                setText('siteNameEnNav', data.siteNameEn);
+                setText('siteNameUrNav', data.siteNameUr);
+                setText('siteNameEnFooter', data.siteNameEn);
+                setText('siteNameUrFooter', data.siteNameUr);
+                setText('footerAddress', data.footerAddress || data.contactAddress);
+                setText('footerPhone', data.footerPhone || data.contactPhone);
+                setText('footerEmail', data.footerEmail || data.contactEmail);
+                setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+
+                const waPhone = (data.contactWhatsApp || data.footerPhone || "").replace(/[^0-9]/g, '');
+                if (waPhone) {
+                    document.getElementById('waLink').href = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
                 }
-            } catch (e) { console.error('Fetch error:', e); }
 
-            const data = savedData;
+                // Hero Mapping
+                setText('heroTitleEn', data.heroTitleEn);
+                const hUr = document.getElementById('heroTitleUr');
+                if (hUr) { hUr.innerText = data.heroTitleUr; checkUrdu(hUr); }
+                setText('heroDesc', data.heroDesc);
+                setText('heroBtn1El', data.heroBtn1Text || "Book Consultation");
+                setText('heroBtn2El', data.heroBtn2Text || "Our Expertise");
+                if (data.heroImage) document.getElementById('heroBgImg').style.backgroundImage = `url('${data.heroImage}')`;
 
-            // Mapping Utilities
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = text || '';
-            };
+                // Stats Mapping
+                setText('statCases', data.statCases);
+                setText('statYears', data.statYears);
+                setText('statSuccess', data.statSuccess);
+                setText('statSupport', data.statSupport);
 
-            const checkUrdu = (el) => {
-                if (!el) return;
-                const text = el.innerText || el.textContent;
-                if (!text || text.trim() === "" || text.includes('urdu text here')) {
-                    el.style.display = 'none';
-                    return false;
+                // Services Grid
+                const services = data.services || [];
+                const sGrid = document.getElementById('dynamicServicesGrid');
+                if (sGrid) {
+                    sGrid.innerHTML = '';
+                    services.slice(0, 6).forEach(srv => {
+                        sGrid.innerHTML += `
+                        <div class="service-card p-12 rounded-[2.5rem] flex flex-col group h-full">
+                            <div class="w-16 h-16 bg-white/5 text-gold rounded-2xl flex items-center justify-center mb-10 transform transition-transform group-hover:rotate-12 group-hover:scale-110">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                            </div>
+                            <h3 class="text-3xl font-serif text-white mb-3 font-bold group-hover:text-gold transition-colors">${srv.titleEn}</h3>
+                            ${srv.titleUr ? `<p class="urdu-text text-xl text-gold-light mb-8">${srv.titleUr}</p>` : ''}
+                            <p class="text-gray-500 mb-10 flex-grow leading-relaxed font-medium line-clamp-3">${srv.desc}</p>
+                            <a href="service-detail.html?id=${srv.id}" class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-gold hover:text-white transition-colors">
+                                Explore Expertise <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                        </div>`;
+                    });
                 }
-                el.style.display = 'block';
-                return true;
-            };
 
-            // Apply Branding
-            setText('siteNameEnNav', data.siteNameEn);
-            setText('siteNameUrNav', data.siteNameUr);
-            setText('siteNameEnFooter', data.siteNameEn);
-            setText('siteNameUrFooter', data.siteNameUr);
-            setText('footerAddress', data.footerAddress || data.contactAddress);
-            setText('footerPhone', data.footerPhone || data.contactPhone);
-            setText('footerEmail', data.footerEmail || data.contactEmail);
-            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+                // Managing Partner Preview
+                setText('mpNameEnPreview', data.mpNameEn);
+                const mpUr = document.getElementById('mpNameUrPreview');
+                if (mpUr) { mpUr.innerText = data.mpNameUr; checkUrdu(mpUr); }
+                setText('mpBioPreview', data.mpBio);
+                if (data.mpImage) document.getElementById('mpImgPreview').src = data.mpImage;
 
-            const waPhone = (data.contactWhatsApp || data.footerPhone || "").replace(/[^0-9]/g, '');
-            if (waPhone) {
-                document.getElementById('waLink').href = `https://wa.me/${waPhone}?text=Hello,%20I%20need%20legal%20consultation`;
-            }
+                // Team Preview
+                const team = data.team || [];
+                const tGrid = document.getElementById('dynamicTeamPreviewGrid');
+                if (tGrid) {
+                    tGrid.innerHTML = '';
+                    team.slice(0, 3).forEach(member => {
+                        tGrid.innerHTML += `
+                        <div class="group relative overflow-hidden rounded-[3rem] aspect-[4/5] shadow-2xl">
+                            <img src="${member.image}" loading="lazy" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent flex flex-col justify-end p-10">
+                                <h4 class="text-3xl font-serif text-white font-bold mb-2">${member.name}</h4>
+                                <p class="text-gold font-bold uppercase tracking-widest text-[10px] mb-8">${member.titleEn}</p>
+                                <a href="team-detail.html?id=${member.id}" class="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 py-4 rounded-2xl text-center text-xs font-black uppercase tracking-widest hover:bg-gold hover:text-obsidian transition-all">Profile</a>
+                            </div>
+                        </div>`;
+                    });
+                }
 
-            // Hero Mapping
-            setText('heroTitleEn', data.heroTitleEn);
-            const hUr = document.getElementById('heroTitleUr');
-            if (hUr) { hUr.innerText = data.heroTitleUr; checkUrdu(hUr); }
-            setText('heroDesc', data.heroDesc);
-            setText('heroBtn1El', data.heroBtn1Text || "Book Consultation");
-            setText('heroBtn2El', data.heroBtn2Text || "Our Expertise");
-            if (data.heroImage) document.getElementById('heroBgImg').style.backgroundImage = `url('${data.heroImage}')`;
+                // Activities Ticker
+                const activities = (data.activities || []).filter(a => a.titleEn);
+                const tickerTrack = document.getElementById('tickerTrack');
+                const tickerSection = document.getElementById('activitiesTickerSection');
+                if (tickerTrack && activities.length > 0) {
+                    tickerSection.classList.remove('hidden');
+                    tickerTrack.innerHTML = '';
+                    activities.forEach(act => {
+                        tickerTrack.innerHTML += `
+                            <div class="flex-shrink-0 bg-white/5 border border-white/5 px-6 py-3 rounded-xl">
+                                <h4 class="text-white font-bold text-xs uppercase tracking-tighter">${act.titleEn}</h4>
+                                <p class="text-gold-light text-[8px] font-black uppercase tracking-widest mt-1">${act.date || ''}</p>
+                            </div>
+                        `;
+                    });
+                }
 
-            // Stats Mapping
-            setText('statCases', data.statCases);
-            setText('statYears', data.statYears);
-            setText('statSuccess', data.statSuccess);
-            setText('statSupport', data.statSupport);
-
-            // Services Grid
-            const services = data.services || [];
-            const sGrid = document.getElementById('dynamicServicesGrid');
-            if (sGrid) {
-                sGrid.innerHTML = '';
-                services.slice(0, 6).forEach(srv => {
-                    sGrid.innerHTML += `
-                    <div class="service-card p-12 rounded-[2.5rem] flex flex-col group h-full">
-                        <div class="w-16 h-16 bg-white/5 text-gold rounded-2xl flex items-center justify-center mb-10 transform transition-transform group-hover:rotate-12 group-hover:scale-110">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
-                        </div>
-                        <h3 class="text-3xl font-serif text-white mb-3 font-bold group-hover:text-gold transition-colors">${srv.titleEn}</h3>
-                        ${srv.titleUr ? `<p class="urdu-text text-xl text-gold-light mb-8">${srv.titleUr}</p>` : ''}
-                        <p class="text-gray-500 mb-10 flex-grow leading-relaxed font-medium line-clamp-3">${srv.desc}</p>
-                        <a href="service-detail.html?id=${srv.id}" class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-gold hover:text-white transition-colors">
-                            Explore Expertise <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </a>
-                    </div>`;
-                });
-            }
-
-            // Managing Partner Preview
-            setText('mpNameEnPreview', data.mpNameEn);
-            const mpUr = document.getElementById('mpNameUrPreview');
-            if (mpUr) { mpUr.innerText = data.mpNameUr; checkUrdu(mpUr); }
-            setText('mpBioPreview', data.mpBio);
-            if (data.mpImage) document.getElementById('mpImgPreview').src = data.mpImage;
-
-            // Team Preview
-            const team = data.team || [];
-            const tGrid = document.getElementById('dynamicTeamPreviewGrid');
-            if (tGrid) {
-                tGrid.innerHTML = '';
-                team.slice(0, 3).forEach(member => {
-                    tGrid.innerHTML += `
-                    <div class="group relative overflow-hidden rounded-[3rem] aspect-[4/5] shadow-2xl">
-                        <img src="${member.image}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent flex flex-col justify-end p-10">
-                            <h4 class="text-3xl font-serif text-white font-bold mb-2">${member.name}</h4>
-                            <p class="text-gold font-bold uppercase tracking-widest text-[10px] mb-8">${member.titleEn}</p>
-                            <a href="team-detail.html?id=${member.id}" class="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 py-4 rounded-2xl text-center text-xs font-black uppercase tracking-widest hover:bg-gold hover:text-obsidian transition-all">Profile</a>
-                        </div>
-                    </div>`;
-                });
-            }
-
-            // Ticker Logic
-            const activities = (data.activities || []).filter(a => a.titleEn);
-            const tickerTrack = document.getElementById('tickerTrack');
-            const tickerSection = document.getElementById('activitiesTickerSection');
-            
-            if (tickerTrack && activities.length > 0) {
-                tickerSection.classList.remove('hidden');
-                tickerTrack.innerHTML = '';
-                activities.forEach(act => {
-                    tickerTrack.innerHTML += `
-                        <div class="flex-shrink-0 bg-white/5 border border-white/5 px-6 py-3 rounded-xl">
-                            <h4 class="text-white font-bold text-xs uppercase tracking-tighter">${act.titleEn}</h4>
-                            <p class="text-gold-light text-[8px] font-black uppercase tracking-widest mt-1">${act.date || ''}</p>
-                        </div>
-                    `;
-                });
-
-                let offset = 0;
-                let autoScroll = setInterval(() => {
-                    offset += 0.8;
-                    if (offset > tickerTrack.scrollWidth) offset = 0;
-                    tickerTrack.style.transform = `translateX(-${offset}px)`;
-                }, 30);
-
-                tickerSection.onmouseenter = () => clearInterval(autoScroll);
-            }
-
-            // Meta
-            if (data.metaTitleHome) document.title = data.metaTitleHome;
-            if (data.metaDescriptionHome) document.getElementById('metaDesc').content = data.metaDescriptionHome;
+                // SEO
+                if (data.metaTitleHome) document.title = data.metaTitleHome;
+                if (data.metaDescriptionHome) document.getElementById('metaDesc').content = data.metaDescriptionHome;
+            });
         });
+
+        // Nav Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass-nav', 'py-4');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('glass-nav', 'py-4');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
 
         // Nav Scroll
         window.addEventListener('scroll', () => {

@@ -49,6 +49,43 @@
     </script>
 
     <style type="text/css">
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #05070A;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(212, 175, 55, 0.1);
+            border-top: 2px solid #D4AF37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-logo {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+
+        body.loaded #preloader {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         body {
             background-color: #05070A;
             color: #E2E8F0;
@@ -79,6 +116,13 @@
 </head>
 
 <body class="font-sans antialiased">
+
+    <!-- Premium Preloader -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <img src="justice_first_logo_1777690009627.png" class="loader-logo" alt="Loading...">
+        <div class="mt-8 text-[10px] uppercase tracking-[0.5em] text-gold font-bold animate-pulse">Initializing Justice</div>
+    </div>
 
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
@@ -168,57 +212,53 @@
         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
 
+    <!-- Performance Manager -->
+    <script src="perf-manager.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
-            try {
-                const res = await fetch('data.json?v=' + new Date().getTime());
-                const fetchedData = await res.json();
-                if (fetchedData && Object.keys(fetchedData).length > 0) {
-                    savedData = fetchedData;
-                    localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
-                }
-            } catch (e) { console.error('Fetch error:', e); }
-            const data = savedData;
+        document.addEventListener('DOMContentLoaded', () => {
+            window.loadJusticeData((data) => {
+                if (!data) return;
 
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = text || '';
-            };
+                const setText = (id, text) => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = text || '';
+                };
 
-            const checkUrdu = (el) => {
-                if (!el) return;
-                const text = el.innerText || el.textContent;
-                if (!text || text.trim() === "" || text.includes('urdu text here')) {
-                    el.style.display = 'none';
-                    return false;
-                }
-                el.style.display = 'block';
-                return true;
-            };
+                const checkUrdu = (el) => {
+                    if (!el) return;
+                    const text = el.innerText || el.textContent;
+                    if (!text || text.trim() === "" || text.includes('urdu text here')) {
+                        el.style.display = 'none';
+                        return false;
+                    }
+                    el.style.display = 'block';
+                    return true;
+                };
 
-            setText('siteNameEnNav', data.siteNameEn);
-            setText('siteNameUrNav', data.siteNameUr);
-            setText('siteNameEnFooter', data.siteNameEn);
-            setText('siteNameUrFooter', data.siteNameUr);
-            setText('footerAddress', data.footerAddress || data.contactAddress);
-            setText('footerPhone', data.footerPhone || data.contactPhone);
-            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+                setText('siteNameEnNav', data.siteNameEn);
+                setText('siteNameUrNav', data.siteNameUr);
+                setText('siteNameEnFooter', data.siteNameEn);
+                setText('siteNameUrFooter', data.siteNameUr);
+                setText('footerAddress', data.footerAddress || data.contactAddress);
+                setText('footerPhone', data.footerPhone || data.contactPhone);
+                setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
 
-            const waPhone = (data.contactWhatsApp || data.footerPhone || "").replace(/[^0-9]/g, '');
-            if (waPhone) document.getElementById('waLink').href = `https://wa.me/${waPhone}?text=Hello`;
+                const waPhone = (data.contactWhatsApp || data.footerPhone || "").replace(/[^0-9]/g, '');
+                if (waPhone) document.getElementById('waLink').href = `https://wa.me/${waPhone}?text=Hello`;
 
-            setText('aboutTitleEn', data.aboutTitleEn || 'Our Legacy');
-            const aUr = document.getElementById('aboutTitleUr');
-            if (aUr) { aUr.innerText = data.aboutTitleUr; checkUrdu(aUr); }
-            
-            setText('aboutStoryEn', data.aboutStoryEn);
-            const asUr = document.getElementById('aboutStoryUr');
-            if (asUr) { asUr.innerText = data.aboutStoryUr; checkUrdu(asUr); }
+                setText('aboutTitleEn', data.aboutTitleEn || 'Our Legacy');
+                const aUr = document.getElementById('aboutTitleUr');
+                if (aUr) { aUr.innerText = data.aboutTitleUr; checkUrdu(aUr); }
+                
+                setText('aboutStoryEn', data.aboutStoryEn);
+                const asUr = document.getElementById('aboutStoryUr');
+                if (asUr) { asUr.innerText = data.aboutStoryUr; checkUrdu(asUr); }
 
-            setText('aboutMission', data.aboutMission);
-            setText('aboutVision', data.aboutVision);
-            if (data.aboutImage) document.getElementById('aboutImgPreview').src = data.aboutImage;
+                setText('aboutMission', data.aboutMission);
+                setText('aboutVision', data.aboutVision);
+                if (data.aboutImage) document.getElementById('aboutImgPreview').src = data.aboutImage;
+            });
         });
     </script>
 </body>

@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" id="metaKeywords" content="legal services, law firm">
     <title id="pageTitle">Service Detail | JUSTICE FIRST LAW ASSOCIATES</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
 
@@ -40,32 +39,29 @@
     </script>
 
     <style type="text/css">
-        body {
-            background-color: #05070A;
-            color: #E2E8F0;
-        }
+        /* Preloader Styles */
+        #preloader { position: fixed; inset: 0; background: #05070A; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s; }
+        .loader-ring { width: 80px; height: 80px; border: 2px solid rgba(212, 175, 55, 0.1); border-top: 2px solid #D4AF37; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-logo { position: absolute; width: 40px; height: 40px; animation: pulse 2s ease-in-out infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+        body.loaded #preloader { opacity: 0; visibility: hidden; }
 
-        .glass-nav {
-            background: rgba(5, 7, 10, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .urdu-text {
-            direction: rtl;
-            line-height: 2.2;
-            font-family: 'Noto Nastaliq Urdu', serif;
-        }
-
-        .premium-btn {
-            background: linear-gradient(90deg, #D4AF37, #F4CF67, #D4AF37);
-            background-size: 200% auto;
-            transition: 0.5s;
-        }
+        body { background-color: #05070A; color: #E2E8F0; }
+        .glass-nav { background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .urdu-text { direction: rtl; line-height: 2.2; font-family: 'Noto Nastaliq Urdu', serif; }
+        .premium-btn { background: linear-gradient(90deg, #D4AF37, #F4CF67, #D4AF37); background-size: 200% auto; transition: 0.5s; }
     </style>
 </head>
 
 <body class="font-sans antialiased">
+
+    <!-- Premium Preloader -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <img src="justice_first_logo_1777690009627.png" class="loader-logo" alt="Loading...">
+        <div class="mt-8 text-[10px] uppercase tracking-[0.5em] text-gold font-bold animate-pulse">Initializing Justice</div>
+    </div>
 
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
@@ -89,7 +85,6 @@
 
     <!-- Detail Header -->
     <header class="pt-40 pb-20 px-6 bg-midnight border-b border-white/5 relative overflow-hidden text-center">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
         <div class="max-w-7xl mx-auto relative z-10">
             <h1 id="sTitleEn" class="text-5xl md:text-8xl font-serif font-bold text-white mb-6"></h1>
             <p id="sTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-light"></p>
@@ -156,73 +151,54 @@
         </div>
     </footer>
 
+    <!-- Performance Manager -->
+    <script src="perf-manager.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const serviceId = parseInt(urlParams.get('id'));
-            
-            let savedData = JSON.parse(localStorage.getItem('justiceFirstDataV2')) || {};
-            try {
-                const res = await fetch('data.json?v=' + new Date().getTime());
-                const fetchedData = await res.json();
-                if (fetchedData && Object.keys(fetchedData).length > 0) {
-                    savedData = fetchedData;
-                    localStorage.setItem('justiceFirstDataV2', JSON.stringify(fetchedData));
+
+            window.loadJusticeData((data) => {
+                if (!data) return;
+
+                const setText = (id, text) => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = text || '';
+                };
+
+                setText('siteNameEnNav', data.siteNameEn);
+                setText('siteNameUrNav', data.siteNameUr);
+                setText('siteNameEnFooter', data.siteNameEn);
+                setText('siteNameUrFooter', data.siteNameUr);
+                setText('footerAddress', data.footerAddress || data.contactAddress);
+                setText('footerPhone', data.footerPhone || data.contactPhone);
+                setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+
+                const phone = data.footerPhone || data.contactPhone || '';
+                const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
+                if (waPhone) {
+                    if (document.getElementById('sideWaLink')) document.getElementById('sideWaLink').href = `https://wa.me/${waPhone}`;
+                    setText('sideWaPhone', data.contactWhatsApp || phone);
                 }
-            } catch (e) { console.error('Fetch error:', e); }
-            const data = savedData;
 
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = text || '';
-            };
-
-            const checkUrdu = (el) => {
-                if (!el) return;
-                const text = el.innerText || el.textContent;
-                if (!text || text.trim() === "" || text.includes('urdu text here')) {
-                    el.style.display = 'none';
-                    return false;
-                }
-                el.style.display = 'block';
-                return true;
-            };
-
-            setText('siteNameEnNav', data.siteNameEn);
-            setText('siteNameUrNav', data.siteNameUr);
-            setText('siteNameEnFooter', data.siteNameEn);
-            setText('siteNameUrFooter', data.siteNameUr);
-            setText('footerAddress', data.footerAddress || data.contactAddress);
-            setText('footerPhone', data.footerPhone || data.contactPhone);
-            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
-
-            const phone = data.footerPhone || data.contactPhone || '';
-            const waPhone = (data.contactWhatsApp || phone).replace(/[^0-9]/g, '');
-            if (waPhone) {
-                if (document.getElementById('sideWaLink')) document.getElementById('sideWaLink').href = `https://wa.me/${waPhone}`;
-                setText('sideWaPhone', data.contactWhatsApp || phone);
-            }
-
-            const services = data.services || [];
-            if(serviceId) {
-                const srv = services.find(s => s.id === serviceId);
-                if(srv) {
-                    setText('sTitleEn', srv.titleEn);
-                    const sUr = document.getElementById('sTitleUr');
-                    if (sUr) { sUr.innerText = srv.titleUr || ''; checkUrdu(sUr); }
-                    setText('sDesc', srv.desc);
-                    
-                    if(srv.keywords) {
-                        const kwContainer = document.getElementById('sKeywords');
-                        if (kwContainer) {
-                            kwContainer.innerHTML = '';
-                            srv.keywords.split(',').forEach(k => {
-                                if(k.trim()) kwContainer.innerHTML += `<span class="bg-white/5 text-gray-400 px-6 py-3 rounded-xl text-xs font-bold border border-white/5 transition-all hover:bg-gold hover:text-obsidian hover:border-gold">#${k.trim()}</span>`;
-                            });
+                const services = data.services || [];
+                if(serviceId) {
+                    const srv = services.find(s => s.id === serviceId);
+                    if(srv) {
+                        setText('sTitleEn', srv.titleEn);
+                        setText('sTitleUr', srv.titleUr);
+                        setText('sDesc', srv.desc);
+                        
+                        if(srv.keywords) {
+                            const kwContainer = document.getElementById('sKeywords');
+                            if (kwContainer) {
+                                kwContainer.innerHTML = srv.keywords.split(',').map(k => `<span class="bg-white/5 text-gray-400 px-6 py-3 rounded-xl text-xs font-bold border border-white/5">#${k.trim()}</span>`).join('');
+                            }
                         }
                     }
                 }
-            }
+            });
         });
     </script>
 </body>
