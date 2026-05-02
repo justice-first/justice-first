@@ -12,15 +12,22 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Endpoint to GET site data
+    // API Route: GET site data
     if (url.pathname === "/api/data" && request.method === "GET") {
-      const data = await env["justice-first"].get("site_data");
-      return new Response(data || "{}", {
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
+      try {
+        const data = await env["justice-first"].get("site_data");
+        return new Response(data || "{}", {
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: "KV Read Error" }), {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
     }
 
-    // Endpoint to SAVE site data
+    // API Route: SAVE site data
     if (url.pathname === "/api/save" && request.method === "POST") {
       try {
         const newData = await request.json();
@@ -36,9 +43,8 @@ export default {
       }
     }
 
-    // Default response for other routes
-    return new Response("Justice First API Active", {
-      headers: { "Content-Type": "text/plain", ...corsHeaders },
-    });
+    // IMPORTANT: Serve all other requests from the static Pages assets
+    // This prevents the "Site can't be reached" error for .html files
+    return env.ASSETS.fetch(request);
   },
 };
