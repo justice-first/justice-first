@@ -1,4 +1,4 @@
-{
+window.justiceData = {
   "siteNameEn": "Justice First",
   "siteNameUr": "Law Associates",
   "heroTitleEn": "Justice First Law Associates",
@@ -79,4 +79,4 @@
   "socialLinkedIn": "https://www.linkedin.com/company/jfla-ajk/",
   "socialInstagram": "",
   "socialYoutube": ""
-}
+};

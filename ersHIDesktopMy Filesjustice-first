@@ -1,6 +1,0 @@
-[33m520205f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Add admin and update Worker URLs
-[33mc04010b[m Add admin and update Worker URLs
-[33m4439aa3[m Load index from KV instead of localStorage
-[33m5637365[m Fix missing closing tags in admin-login
-[33mf85a14b[m Fix admin login
-[33mf9177aa[m Remove unused config files
