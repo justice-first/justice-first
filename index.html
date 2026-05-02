@@ -205,9 +205,13 @@
         document.addEventListener('DOMContentLoaded', async () => {
             let data = window.justiceData;
 
-            // Optional: Fetch fresh data from KV if online
+            // Optional: Fetch fresh data from KV if online (2s timeout)
             try {
-                const response = await fetch('/api/data');
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                const response = await fetch('/api/data', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
                 if (response.ok) {
                     const cloudData = await response.json();
                     if (cloudData && Object.keys(cloudData).length > 0) {
@@ -215,7 +219,7 @@
                     }
                 }
             } catch (err) {
-                console.log("KV Fetch failed, using local data.");
+                console.log("Cloud Fetch failed or timed out, using local data.");
             }
 
             if (!data) return;
