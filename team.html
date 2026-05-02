@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="metaTitle">Legal Strategists | JUSTICE FIRST LAW ASSOCIATES</title>
-    <meta name="description" id="metaDesc" content="Meet the expert attorneys at Justice First Law Associates. Dedicated to serving justice in Muzaffarabad.">
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
 
     <!-- Fonts -->
@@ -40,14 +39,6 @@
     </script>
 
     <style type="text/css">
-        /* Preloader Styles */
-        #preloader { position: fixed; inset: 0; background: #05070A; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s; }
-        .loader-ring { width: 80px; height: 80px; border: 2px solid rgba(212, 175, 55, 0.1); border-top: 2px solid #D4AF37; border-radius: 50%; animation: spin 1s linear infinite; }
-        .loader-logo { position: absolute; width: 40px; height: 40px; animation: pulse 2s ease-in-out infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
-        body.loaded #preloader { opacity: 0; visibility: hidden; }
-
         body { background-color: #05070A; color: #E2E8F0; }
         .glass-nav { background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .urdu-text { direction: rtl; line-height: 2.2; font-family: 'Noto Nastaliq Urdu', serif; }
@@ -56,13 +47,6 @@
 </head>
 
 <body class="font-sans antialiased">
-
-    <!-- Premium Preloader -->
-    <div id="preloader">
-        <div class="loader-ring"></div>
-        <img src="justice_first_logo_1777690009627.png" class="loader-logo" alt="Loading...">
-        <div class="mt-8 text-[10px] uppercase tracking-[0.5em] text-gold font-bold animate-pulse">Initializing Justice</div>
-    </div>
 
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
@@ -121,47 +105,44 @@
         </div>
     </footer>
 
-    <!-- Performance Manager -->
-    <script src="perf-manager.js"></script>
+    <!-- Local Data Loader -->
+    <script src="data.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.loadJusticeData((data) => {
-                if (!data) return;
+            const data = window.justiceData;
+            if (!data) return;
 
-                const setText = (id, text) => {
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = text || '';
-                };
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
 
-                setText('siteNameEnNav', data.siteNameEn);
-                setText('siteNameUrNav', data.siteNameUr);
-                setText('siteNameEnFooter', data.siteNameEn);
-                setText('siteNameUrFooter', data.siteNameUr);
-                setText('footerAddress', data.footerAddress || data.contactAddress);
-                setText('footerPhone', data.footerPhone || data.contactPhone);
-                setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+            setText('siteNameEnNav', data.siteNameEn);
+            setText('siteNameUrNav', data.siteNameUr);
+            setText('siteNameEnFooter', data.siteNameEn);
+            setText('siteNameUrFooter', data.siteNameUr);
+            setText('footerAddress', data.footerAddress || data.contactAddress);
+            setText('footerPhone', data.footerPhone || data.contactPhone);
+            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
 
-                setText('teamTitleEn', data.teamTitleEn || 'Our Team');
-                setText('teamTitleUr', data.teamTitleUr);
+            setText('teamTitleEn', data.teamTitleEn || 'Our Team');
+            setText('teamTitleUr', data.teamTitleUr);
 
-                const team = data.team || [];
-                const tGrid = document.getElementById('dynamicTeamGrid');
-                if (tGrid) {
-                    tGrid.innerHTML = '';
-                    team.forEach(member => {
-                        tGrid.innerHTML += `
-                        <div class="group relative overflow-hidden rounded-[3rem] aspect-[4/5] shadow-2xl bg-white/5 border border-white/5">
-                            <img src="${member.image}" loading="lazy" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent flex flex-col justify-end p-10">
-                                <h4 class="text-3xl font-serif text-white font-bold mb-2">${member.name}</h4>
-                                <p class="text-gold font-bold uppercase tracking-widest text-[10px] mb-8">${member.titleEn}</p>
-                                <a href="team-detail.html?id=${member.id}" class="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 py-4 rounded-2xl text-center text-xs font-black uppercase tracking-widest hover:bg-gold hover:text-obsidian transition-all">Profile Details</a>
-                            </div>
-                        </div>`;
-                    });
-                }
-            });
+            const team = data.team || [];
+            const tGrid = document.getElementById('dynamicTeamGrid');
+            if (tGrid) {
+                tGrid.innerHTML = team.map(member => `
+                    <div class="group relative overflow-hidden rounded-[3rem] aspect-[4/5] shadow-2xl bg-white/5 border border-white/5">
+                        <img src="${member.image}" loading="lazy" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent flex flex-col justify-end p-10">
+                            <h4 class="text-3xl font-serif text-white font-bold mb-2">${member.name}</h4>
+                            <p class="text-gold font-bold uppercase tracking-widest text-[10px] mb-8">${member.titleEn}</p>
+                            <a href="team-detail.html?id=${member.id}" class="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 py-4 rounded-2xl text-center text-xs font-black uppercase tracking-widest hover:bg-gold hover:text-obsidian transition-all">Profile Details</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
         });
     </script>
 </body>

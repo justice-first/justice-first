@@ -39,28 +39,14 @@
     </script>
 
     <style type="text/css">
-        /* Preloader Styles */
-        #preloader { position: fixed; inset: 0; background: #05070A; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s; }
-        .loader-ring { width: 80px; height: 80px; border: 2px solid rgba(212, 175, 55, 0.1); border-top: 2px solid #D4AF37; border-radius: 50%; animation: spin 1s linear infinite; }
-        .loader-logo { position: absolute; width: 40px; height: 40px; animation: pulse 2s ease-in-out infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
-        body.loaded #preloader { opacity: 0; visibility: hidden; }
-
         body { background-color: #05070A; color: #E2E8F0; }
         .glass-nav { background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .urdu-text { direction: rtl; line-height: 2.2; font-family: 'Noto Nastaliq Urdu', serif; }
         .premium-btn { background: linear-gradient(90deg, #D4AF37, #F4CF67, #D4AF37); background-size: 200% auto; transition: 0.5s; }
     </style>
 </head>
 
 <body class="font-sans antialiased">
-
-    <!-- Premium Preloader -->
-    <div id="preloader">
-        <div class="loader-ring"></div>
-        <img src="justice_first_logo_1777690009627.png" class="loader-logo" alt="Loading...">
-        <div class="mt-8 text-[10px] uppercase tracking-[0.5em] text-gold font-bold animate-pulse">Initializing Justice</div>
-    </div>
 
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
@@ -91,29 +77,18 @@
             <div class="w-full lg:w-2/3 text-center lg:text-left">
                 <span id="mTitle" class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Attorney at Law</span>
                 <h1 id="mName" class="text-5xl md:text-8xl font-serif font-bold text-white mb-6"></h1>
-                <div id="mSocials" class="flex justify-center lg:justify-start space-x-6 pt-8"></div>
             </div>
         </div>
     </header>
 
     <!-- Details -->
     <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-16 items-start">
-            <div class="lg:col-span-2 space-y-16">
-                <div class="bg-white/5 border border-white/10 p-12 rounded-[3rem] shadow-2xl">
-                    <h2 class="text-3xl font-serif text-white font-bold mb-8 flex items-center">
-                        <span class="w-12 h-[1px] bg-gold mr-6"></span> Legal Profile
-                    </h2>
-                    <p id="mBio" class="text-xl text-gray-400 leading-relaxed font-light"></p>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-b from-midnight to-transparent p-12 rounded-[2.5rem] border border-white/10 shadow-2xl">
-                <h3 class="text-2xl font-serif text-white font-bold mb-6">Private Session</h3>
-                <p class="text-gray-400 text-sm mb-10 leading-relaxed">Book a direct consultation to discuss your specific legal needs with this specialist.</p>
-                <div class="space-y-6">
-                    <a href="contact.html" class="premium-btn w-full block text-center text-obsidian py-5 rounded-2xl font-black uppercase tracking-widest text-[10px]">Secure Consultation</a>
-                </div>
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white/5 border border-white/10 p-12 rounded-[3rem] shadow-2xl max-w-4xl mx-auto">
+                <h2 class="text-3xl font-serif text-white font-bold mb-8 flex items-center">
+                    <span class="w-12 h-[1px] bg-gold mr-6"></span> Legal Profile
+                </h2>
+                <p id="mBio" class="text-xl text-gray-400 leading-relaxed font-light"></p>
             </div>
         </div>
     </section>
@@ -129,7 +104,7 @@
                         <span id="siteNameUrFooter" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span>
                     </div>
                 </div>
-                <p id="footerCopyrightEl" class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">© 2024 Justice First Law Associates. All Rights Reserved.</p>
+                <p id="footerCopyrightEl" class="text-gray-500 text-[10px] uppercase tracking-widest font-bold"></p>
             </div>
             <div class="flex flex-col md:items-end text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
                 <p id="footerAddress" class="mb-4 text-center md:text-right max-w-sm"></p>
@@ -138,41 +113,39 @@
         </div>
     </footer>
 
-    <!-- Performance Manager -->
-    <script src="perf-manager.js"></script>
+    <!-- Local Data Loader -->
+    <script src="data.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const memberId = parseInt(urlParams.get('id'));
+            const data = window.justiceData;
+            if (!data) return;
 
-            window.loadJusticeData((data) => {
-                if (!data) return;
+            const setText = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = text || '';
+            };
 
-                const setText = (id, text) => {
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = text || '';
-                };
+            setText('siteNameEnNav', data.siteNameEn);
+            setText('siteNameUrNav', data.siteNameUr);
+            setText('siteNameEnFooter', data.siteNameEn);
+            setText('siteNameUrFooter', data.siteNameUr);
+            setText('footerAddress', data.footerAddress || data.contactAddress);
+            setText('footerPhone', data.footerPhone || data.contactPhone);
+            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
 
-                setText('siteNameEnNav', data.siteNameEn);
-                setText('siteNameUrNav', data.siteNameUr);
-                setText('siteNameEnFooter', data.siteNameEn);
-                setText('siteNameUrFooter', data.siteNameUr);
-                setText('footerAddress', data.footerAddress || data.contactAddress);
-                setText('footerPhone', data.footerPhone || data.contactPhone);
-                setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
-
-                const team = data.team || [];
-                if(memberId) {
-                    const member = team.find(m => m.id === memberId);
-                    if(member) {
-                        setText('mName', member.name);
-                        setText('mTitle', member.titleEn);
-                        setText('mBio', member.bio || member.desc);
-                        if(member.image) document.getElementById('mImg').src = member.image;
-                    }
+            const team = data.team || [];
+            if(memberId) {
+                const member = team.find(m => m.id === memberId);
+                if(member) {
+                    setText('mName', member.name);
+                    setText('mTitle', member.titleEn);
+                    setText('mBio', member.bio || member.desc);
+                    if(member.image) document.getElementById('mImg').src = member.image;
                 }
-            });
+            }
         });
     </script>
 </body>
