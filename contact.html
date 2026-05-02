@@ -2,6 +2,15 @@
 <html lang="en" class="scroll-smooth">
 
 <head>
+    <!-- Service Worker KILL-SWITCH -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) { registration.unregister(); }
+            });
+        }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="metaTitle">Contact Us | JUSTICE FIRST LAW ASSOCIATES</title>
@@ -51,7 +60,7 @@
     <!-- Header / Nav -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-4">
+            <a href="/" class="flex items-center space-x-4">
                 <img id="siteLogoNav" src="justice_first_logo_1777690009627.png" alt="Logo" class="w-10 h-10 object-contain">
                 <div class="flex flex-col text-left">
                     <span id="siteNameEnNav" class="text-lg md:text-xl font-serif font-bold text-white tracking-tight uppercase">Justice First</span>
@@ -59,11 +68,11 @@
                 </div>
             </a>
             <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
-                <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
-                <a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a>
-                <a href="services.html" class="text-gray-400 hover:text-white transition-colors">Services</a>
-                <a href="team.html" class="text-gray-400 hover:text-white transition-colors">Team</a>
-                <a href="contact.html" class="text-gold border-b border-gold pb-1">Contact</a>
+                <a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                <a href="about" class="text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="services" class="text-gray-400 hover:text-white transition-colors">Services</a>
+                <a href="team" class="text-gray-400 hover:text-white transition-colors">Team</a>
+                <a href="contact" class="text-gold border-b border-gold pb-1">Contact</a>
             </div>
         </div>
     </nav>
