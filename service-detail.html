@@ -1,155 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
-    <!-- Service Worker KILL-SWITCH -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) { registration.unregister(); }
-            });
-        }
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{for(let g of r)g.unregister()})}</script>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title id="pageTitle">Service Detail | JUSTICE FIRST LAW ASSOCIATES</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpg">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        midnight: "#0A0F1D",
-                        obsidian: "#05070A",
-                        gold: {
-                            DEFAULT: "#D4AF37",
-                            light: "#F4CF67",
-                            dark: "#A68926",
-                        },
-                    },
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        serif: ['"Playfair Display"', 'serif'],
-                        urdu: ['"Noto Nastaliq Urdu"', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style type="text/css">
-        body { background-color: #05070A; color: #E2E8F0; }
-        .glass-nav { background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .urdu-text { direction: rtl; line-height: 2.2; font-family: 'Noto Nastaliq Urdu', serif; }
-        .premium-btn { background: linear-gradient(90deg, #D4AF37, #F4CF67, #D4AF37); background-size: 200% auto; transition: 0.5s; }
+    <script>tailwind.config={theme:{extend:{colors:{midnight:"#0A0F1D",obsidian:"#05070A",gold:{DEFAULT:"#D4AF37",light:"#F4CF67",dark:"#A68926"}},fontFamily:{sans:['"Plus Jakarta Sans"','sans-serif'],serif:['"Playfair Display"','serif'],urdu:['"Noto Nastaliq Urdu"','serif']}}}}</script>
+    <style>
+        body{background:#05070A;color:#E2E8F0}
+        .glass-nav{background:rgba(5,7,10,.8);backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,.05)}
+        .urdu-text{direction:rtl;line-height:2.2;font-family:'Noto Nastaliq Urdu',serif}
+        .premium-btn{background:linear-gradient(90deg,#D4AF37,#F4CF67,#D4AF37);background-size:200% auto;transition:.5s}
+        .premium-btn:hover{background-position:right center;box-shadow:0 0 20px rgba(212,175,55,.4)}
+        .mobile-menu{transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+        .mobile-menu.active{transform:translateX(0)}
+        .hamburger span{display:block;width:24px;height:2px;background:#D4AF37;margin:5px 0;transition:.3s}
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.active span:nth-child(2){opacity:0}
+        .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
     </style>
 </head>
-
 <body class="font-sans antialiased">
-
-    <!-- Header / Nav -->
-    <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav py-4">
+    <nav class="fixed top-0 w-full z-[1000] glass-nav py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="flex items-center space-x-4">
                 <img id="siteLogoNav" src="justice_first_logo_1777690009627.png" alt="Logo" class="w-10 h-10 object-contain">
-                <div class="flex flex-col">
-                    <span id="siteNameEnNav" class="text-lg md:text-xl font-serif font-bold text-white tracking-tight uppercase">Justice First</span>
-                    <span id="siteNameUrNav" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span>
-                </div>
+                <div class="flex flex-col"><span id="siteNameEnNav" class="text-lg md:text-xl font-serif font-bold text-white tracking-tight uppercase">Justice First</span><span id="siteNameUrNav" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span></div>
             </a>
             <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
                 <a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a>
                 <a href="about" class="text-gray-400 hover:text-white transition-colors">About</a>
-                <a href="services" class="text-gold border-b border-gold pb-1">Services</a>
+                <a href="services" class="text-gold border-b border-gold pb-1">Areas of Practice</a>
                 <a href="team" class="text-gray-400 hover:text-white transition-colors">Team</a>
-                <a href="contact" class="premium-btn text-obsidian px-7 py-2 rounded-full">Consultation</a>
+                <a href="contact" class="premium-btn text-obsidian px-7 py-2 rounded-full">Contact Us</a>
             </div>
+            <button id="hamburgerBtn" class="lg:hidden hamburger z-[1100]" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </nav>
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-[1050] bg-obsidian/98 backdrop-blur-2xl flex flex-col items-center justify-center space-y-8">
+        <a href="/" class="text-white text-2xl font-serif font-bold hover:text-gold transition-colors">Home</a>
+        <a href="about" class="text-white text-2xl font-serif font-bold hover:text-gold transition-colors">About</a>
+        <a href="services" class="text-gold text-2xl font-serif font-bold">Areas of Practice</a>
+        <a href="team" class="text-white text-2xl font-serif font-bold hover:text-gold transition-colors">Team</a>
+        <a href="contact" class="premium-btn text-obsidian px-10 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest mt-4">Contact Us</a>
+    </div>
 
-    <!-- Detail Header -->
-    <header class="pt-40 pb-20 px-6 bg-midnight border-b border-white/5 relative overflow-hidden text-center">
-        <div class="max-w-7xl mx-auto relative z-10">
+    <header class="pt-40 pb-20 px-6 bg-midnight border-b border-white/5 text-center">
+        <div class="max-w-7xl mx-auto">
             <h1 id="sTitleEn" class="text-5xl md:text-8xl font-serif font-bold text-white mb-6"></h1>
             <p id="sTitleUr" class="urdu-text text-3xl md:text-5xl text-gold-light"></p>
         </div>
     </header>
 
-    <!-- Detail Content -->
     <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="bg-white/5 border border-white/10 p-12 rounded-[3rem] shadow-2xl max-w-4xl mx-auto">
-                <h2 class="text-3xl font-serif text-white font-bold mb-8 flex items-center">
-                    <span class="w-12 h-[1px] bg-gold mr-6"></span> Expertise Overview
-                </h2>
-                <p id="sDesc" class="text-xl text-gray-400 leading-relaxed font-light"></p>
-            </div>
+        <div class="max-w-4xl mx-auto bg-white/5 border border-white/10 p-12 rounded-[3rem] shadow-2xl">
+            <h2 class="text-3xl font-serif text-white font-bold mb-8 flex items-center"><span class="w-12 h-[1px] bg-gold mr-6"></span>Expertise Overview</h2>
+            <p id="sDesc" class="text-xl text-gray-400 leading-relaxed font-light"></p>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-obsidian border-t border-white/5 pt-20 pb-12 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-10">
-            <div>
-                <div class="flex items-center space-x-4 mb-6 justify-center md:justify-start">
+    <section class="py-20 px-6 bg-midnight/50 border-t border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-2xl md:text-4xl font-serif font-bold text-white mb-6">Need assistance in this area?</h3>
+            <a href="contact" class="premium-btn text-obsidian px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs inline-block">Contact Us</a>
+        </div>
+    </section>
+
+    <footer class="bg-obsidian border-t border-white/5 pt-16 pb-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-12">
+                <div class="flex items-center space-x-4">
                     <img id="siteLogoFooter" src="justice_first_logo_1777690009627.png" class="w-10 h-10" alt="Logo">
-                    <div class="flex flex-col">
-                        <span id="siteNameEnFooter" class="text-xl font-bold text-white uppercase tracking-tight">Justice First</span>
-                        <span id="siteNameUrFooter" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span>
-                    </div>
+                    <div class="flex flex-col"><span id="siteNameEnFooter" class="text-xl font-bold text-white uppercase tracking-tight">Justice First</span><span id="siteNameUrFooter" class="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Law Associates</span></div>
+                </div>
+                <div class="flex flex-col md:items-end text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
+                    <p id="footerAddress" class="mb-2 text-center md:text-right max-w-sm"></p>
+                    <p id="footerPhone" class="text-gold text-lg"></p>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex flex-wrap justify-center gap-8 text-[10px] font-bold uppercase tracking-[0.3em]">
+                    <a href="/" class="text-gray-400 hover:text-gold transition-colors">Home</a><a href="about" class="text-gray-400 hover:text-gold transition-colors">About</a><a href="services" class="text-gray-400 hover:text-gold transition-colors">Practice</a><a href="team" class="text-gray-400 hover:text-gold transition-colors">Team</a><a href="contact" class="text-gray-400 hover:text-gold transition-colors">Contact</a>
                 </div>
                 <p id="footerCopyrightEl" class="text-gray-500 text-[10px] uppercase tracking-widest font-bold"></p>
-            </div>
-            <div class="flex flex-col md:items-end text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400">
-                <p id="footerAddress" class="mb-4 text-center md:text-right max-w-sm"></p>
-                <p id="footerPhone" class="text-gold text-lg"></p>
             </div>
         </div>
     </footer>
 
-    <!-- Local Data Loader -->
     <script src="data.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const serviceId = parseInt(urlParams.get('id'));
-            const data = window.justiceData;
-            if (!data) return;
-
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = text || '';
-            };
-
-            setText('siteNameEnNav', data.siteNameEn);
-            setText('siteNameUrNav', data.siteNameUr);
-            setText('siteNameEnFooter', data.siteNameEn);
-            setText('siteNameUrFooter', data.siteNameUr);
-            setText('footerAddress', data.footerAddress || data.contactAddress);
-            setText('footerPhone', data.footerPhone || data.contactPhone);
-            setText('footerCopyrightEl', `© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
-
-            const services = data.services || [];
-            if(serviceId) {
-                const srv = services.find(s => s.id === serviceId);
-                if(srv) {
-                    setText('sTitleEn', srv.titleEn);
-                    setText('sTitleUr', srv.titleUr);
-                    setText('sDesc', srv.desc);
-                }
-            }
+        document.addEventListener('DOMContentLoaded',()=>{
+            const urlParams=new URLSearchParams(window.location.search);const serviceId=parseInt(urlParams.get('id'));const data=window.justiceData;if(!data)return;
+            const setText=(id,text)=>{const el=document.getElementById(id);if(el)el.innerText=text||''};
+            setText('siteNameEnNav',data.siteNameEn);setText('siteNameUrNav',data.siteNameUr);
+            setText('siteNameEnFooter',data.siteNameEn);setText('siteNameUrFooter',data.siteNameUr);
+            setText('footerAddress',data.footerAddress||data.contactAddress);setText('footerPhone',data.footerPhone||data.contactPhone);
+            setText('footerCopyrightEl',`© ${new Date().getFullYear()} ${data.siteNameEn}. All Rights Reserved.`);
+            const services=data.services||[];
+            if(serviceId){const srv=services.find(s=>s.id===serviceId);if(srv){setText('sTitleEn',srv.titleEn);setText('sTitleUr',srv.titleUr);setText('sDesc',srv.desc)}}
         });
+        const h=document.getElementById('hamburgerBtn'),m=document.getElementById('mobileMenu');
+        if(h&&m){h.addEventListener('click',()=>{h.classList.toggle('active');m.classList.toggle('active');document.body.style.overflow=m.classList.contains('active')?'hidden':''})}
     </script>
 </body>
 </html>
