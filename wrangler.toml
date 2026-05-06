@@ -1,6 +1,0 @@
-name = "justice-first-api"
-compatibility_date = "2024-01-01"
-
-[[kv_namespaces]]
-binding = "JUSTICE_FIRST_DATA"
-id = "e74795b0b0634019a25a22d77b538d1e"
